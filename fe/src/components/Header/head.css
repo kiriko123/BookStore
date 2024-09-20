@@ -1,0 +1,68 @@
+/* General head styling */
+.head {
+    background-color: #0f3460;
+    padding: 10px 0;
+    color: #fff;
+    font-size: 13px;
+}
+.container{
+    padding: 0 15px;
+}
+/* Flexbox for alignment */
+.d_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Flex row styling */
+.row {
+    display: flex;
+    align-items: center;
+}
+
+/* Icons and labels styling */
+.head i {
+    margin-right: 10px;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Label styling */
+.head label {
+    margin-right: 30px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.head label:hover{
+    color: #11998e;
+    opacity: .9;
+}
+
+/* Right section styling */
+.RText {
+    justify-content: flex-end;
+}
+
+.RText label {
+    margin-right: 15px;
+}
+
+.RText span {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .d_flex {
+        flex-direction: column;
+        text-align: center;
+    }
+    .left, .right {
+        margin: 5px 0;
+    }
+    .head label {
+        margin-right: 15px;
+    }
+}

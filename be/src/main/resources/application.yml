@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tankhang101a@gmail.com
+    password: zrjl slek mbes mfii
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+  application:
+    name: datn_be
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/dbo_bookstore?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+khang:
+  jwt:
+    base64-secret: ZNsuIEYem0dC12lgBymX2bCpRj8V2FYIJyVdwNjsCr+aZD4xVya98ZmdS9Yv5xwYjTzdQReKJDq5E76AxMebzQ==
+    access-token-validity-in-seconds: 900     # 15 minutes = 900 seconds
+    refresh-token-validity-in-seconds: 604800  # 7 days = 604800 seconds
+  upload-file:
+    base-uri: file:///D:/Project/BookStore/upload/

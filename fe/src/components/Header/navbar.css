@@ -1,0 +1,275 @@
+/*
+general
+-------
+*/
+body {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+.ant-layout {
+    background: #fff !important;
+}
+
+.mainLayout .ant-layout-nav {
+    background: #f8f8f8;
+    padding: 0;
+    height: auto;
+    line-height: 1.6;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.bgGray {
+    background: #fafafa;
+}
+
+/*
+title holder
+------------
+*/
+.titleHolder {
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.titleHolder:after {
+    content: '';
+    background: #1890ff;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 3px;
+    width: 50px;
+}
+
+.titleHolder h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+/*
+nav
+------
+*/
+.ant-layout-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
+.header {
+    background-color: #fff; /* Ensure background color for better visibility */
+    position: sticky;
+    top: 0; /* Stick to the top */
+    z-index: 1000; /* Ensure it's on top of other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
+}
+
+.nav{
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav .logo {
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.nav .logo .fas {
+    color: #1890ff;
+    margin-right: 5px;
+    font-size: 28px;
+}
+
+.nav .logo a {
+    color: #333;
+    text-decoration: none;
+}
+.nav .mobileHidden nav{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+.nav .mobileHidden nav div span{
+    display: flex;
+
+    align-items: center;
+    gap: 4px;
+}
+.mobileVisible-nav{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.mobileVisible-nav-div{
+    padding: 10px;
+}
+.mobileVisible-nav .mobileVisible-nav-div:hover {
+    background: #477e4f;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.mobileVisible-nav .mobileVisible-nav-div span:hover {
+    color: #ebebeb;
+}
+.mobileVisible-nav div span{
+
+}
+span{
+    cursor: pointer;
+    font-size: 16px;
+}
+span:hover{
+    color: #1890ff;
+}
+.nav .ant-anchor-wrapper {
+    background: none;
+}
+
+.nav .ant-anchor {
+    display: flex;
+}
+
+.nav .ant-anchor-ink {
+    display: none;
+}
+
+.nav .ant-anchor-link {
+    padding: 0 20px;
+    line-height: 1.4;
+    position: relative;
+}
+
+.nav .ant-anchor-link:before,
+.nav .ant-anchor-link:after {
+    content: '';
+    background: #1890ff;
+    width: 1px;
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 30%;
+    opacity: 0;
+    transition: all 0.3s linear;
+}
+
+.nav .ant-anchor-link:after {
+    left: auto;
+    right: 30%;
+}
+
+.nav .ant-anchor-link.ant-anchor-link-active:before,
+.nav .ant-anchor-link:hover:before {
+    left: 5%;
+    opacity: 1;
+}
+
+.nav .ant-anchor-link.ant-anchor-link-active:after,
+.nav .ant-anchor-link:hover:after {
+    right: 5%;
+    opacity: 1;
+}
+
+/* ant menu */
+.nav .ant-menu {
+    border: 0;
+    background: none !important;
+}
+
+.nav .ant-menu li.ant-menu-item {
+    position: relative;
+    color: #333;
+}
+
+.nav .ant-menu li.ant-menu-item:before,
+.nav .ant-menu li.ant-menu-item:after {
+    content: '';
+    background: #1890ff;
+    width: 1px;
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 30%;
+    opacity: 0;
+    transition: all 0.3s linear;
+}
+
+.nav .ant-menu li.ant-menu-item:after {
+    left: auto;
+    right: 30%;
+}
+
+.nav .ant-menu li.ant-menu-item,
+.nav .ant-menu li.ant-menu-item-selected {
+    border: 0 !important;
+}
+
+.nav .ant-menu li.ant-menu-item-selected,
+.nav .ant-menu li.ant-menu-item:hover {
+    color: #1890ff;
+    background: none;
+}
+
+.nav .ant-menu li.ant-menu-item-selected:before,
+.nav .ant-menu li.ant-menu-item:hover:before {
+    left: 5%;
+    opacity: 1;
+}
+
+.nav .ant-menu li.ant-menu-item-selected:after,
+.nav .ant-menu li.ant-menu-item:hover:after {
+    right: 5%;
+    opacity: 1;
+}
+
+.mobileVisible {
+    display: none;
+}
+
+.mobileHidden {
+    display: block;
+}
+
+/*
+responsive
+----------
+*/
+@media only screen and (max-width: 991px) {
+    .pricingBlock .ant-row > div:nth-child(2) .ant-list-item {
+        transform: scale(1.14);
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .pricingBlock .ant-row > div:nth-child(2) .ant-list-item {
+        transform: scale(1);
+    }
+
+    .mobileVisible {
+        display: block;
+    }
+
+    .mobileHidden {
+        display: none;
+    }
+}

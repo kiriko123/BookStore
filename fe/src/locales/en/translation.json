@@ -1,0 +1,18 @@
+{
+  "home": "Home",
+  "product": "Product",
+  "cart": "Cart",
+  "about": "About",
+  "login_register": "Login/Register",
+  "faqs": "FAQ's",
+  "need_help": "Need Help?",
+  "table": "Table",
+  "form": "Form",
+  "create": "Create",
+  "update": "Update",
+  "delete": "Delete",
+  "reset": "Reset",
+  "edit": "Edit",
+  "name": "Name"
+
+}
