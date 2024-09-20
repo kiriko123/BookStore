@@ -121,15 +121,12 @@ const Navbar = () => {
                 <div className="nav">
                     <div className="logo">
                         <i className="fas fa-bolt"></i>
-                        <a href="http://google.com">好不好</a>
+                        <a href="http://google.com">BookStore</a>
                     </div>
                     <div className="mobileHidden">
                         <nav>
                             <div>
                                 <span onClick={() => navigate('/')}> <FaHome/> <p>{t('home')}</p></span>
-                            </div>
-                            <div>
-                                <span onClick={() => navigate('/1')}> <BiSolidCategoryAlt/> <p>{t('product')}</p></span>
                             </div>
                             <div>
                                 <span onClick={() => navigate('/2')}> <FaCartShopping/> <p>{t('cart')}</p></span>
@@ -176,9 +173,6 @@ const Navbar = () => {
                             <nav className="mobileVisible-nav">
                                 <div className="mobileVisible-nav-div" onClick={() => navigate('/')}>
                                     <span><FaHome/> {t('home')}</span>
-                                </div>
-                                <div className="mobileVisible-nav-div" onClick={() => navigate('/1')}>
-                                    <span> <BiSolidCategoryAlt/> {t('product')}</span>
                                 </div>
                                 <div className="mobileVisible-nav-div" onClick={() => navigate('/2')}>
                                     <span> <FaCartShopping/> {t('cart')}</span>
