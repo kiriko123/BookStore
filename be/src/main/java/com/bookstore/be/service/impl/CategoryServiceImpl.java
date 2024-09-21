@@ -79,4 +79,9 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found"));
     }
+
+    @Override
+    public List<CategoryResponse> getAll() {
+        return categoryRepository.findAll().stream().map(categoryMapping::fromCategoryToCategoryResponse).toList();
+    }
 }

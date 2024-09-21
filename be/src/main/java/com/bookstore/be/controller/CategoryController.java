@@ -44,4 +44,9 @@ public class CategoryController {
         log.info("Get all category");
         return ResponseEntity.ok().body(categoryService.getAllCategories(specification, pageable));
     }
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll() {
+        log.info("Get all category.");
+        return ResponseEntity.ok().body(categoryService.getAll());
+    }
 }

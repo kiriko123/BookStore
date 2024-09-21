@@ -6,6 +6,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,23 +16,32 @@ import java.time.Instant;
 @AllArgsConstructor
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "products")
-public class Product {
+@Table(name = "books")
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     String name;
 
+    String author;
+
     float price;
 
-    String imageUrl;
+    int quantity;
 
-    String description;
+    int soldQuantity;
+
+    String thumbnail;
+
+    @ElementCollection
+    @CollectionTable(name = "book_sliders", joinColumns = @JoinColumn(name = "book_id"))
+    @Column(name = "slider_url")
+    List<String> sliders;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    Category category;
 
     Instant createdAt;
     Instant updatedAt;

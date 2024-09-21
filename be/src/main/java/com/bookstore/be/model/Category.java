@@ -1,11 +1,13 @@
 package com.bookstore.be.model;
 
 import com.bookstore.be.util.SecurityUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,6 +25,10 @@ public class Category {
     String name;
 
     String imageUrl;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
+    List<Book> books;
 
     Instant createdAt;
     Instant updatedAt;
