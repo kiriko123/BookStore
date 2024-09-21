@@ -16,6 +16,7 @@ import Auth from "./pages/auth/index.jsx";
 import Slider from "./pages/slider/slider.jsx";
 import Header from "./components/Header/header.jsx";
 import ForgotPage from "./pages/forgot/forgot.jsx";
+import ManageBookPage from "./pages/admin/book/index.jsx";
 
 
 const Layout = () => {
@@ -89,10 +90,10 @@ export default function App() {
                     element:
                         <ManageUserPage/>
                 },
-                // {
-                //     path: "book",
-                //     element: <Book/>,
-                // }
+                {
+                    path: "book",
+                    element: <ManageBookPage/>,
+                }
             ]
         },
     ])

@@ -9,7 +9,7 @@ import {
     DownOutlined,
 } from '@ant-design/icons';
 import {Layout, Menu, Dropdown, Space, message, Avatar} from 'antd';
-import {Outlet, useNavigate, Link} from 'react-router-dom';
+import {Outlet, useNavigate, Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {callLogout} from "../../services/api.js";
 import {doLogoutAction} from "../../redux/account/accountSlice.js";
@@ -33,12 +33,12 @@ const items = [
         icon: <UserOutlined/>,
     },
     {
-        label: <Link to='/admin/book'>Manage ....</Link>,
+        label: <Link to='/admin/book'>Manage Books</Link>,
         key: 'book',
         icon: <ExceptionOutlined/>
     },
     {
-        label: <Link to='/admin/order'>Manage ....</Link>,
+        label: <Link to='/admin/order'>Manage Orders</Link>,
         key: 'order',
         icon: <DollarCircleOutlined/>
     },
@@ -46,11 +46,11 @@ const items = [
 
 const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const [activeMenu, setActiveMenu] = useState('dashboard');
     const user = useSelector(state => state.account.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showManageAccount, setShowManageAccount] = useState(false);
+    const location = useLocation();
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -59,6 +59,15 @@ const LayoutAdmin = () => {
             message.success('Đăng xuất thành công');
             navigate('/');
         }
+    };
+
+    // Xác định `key` từ đường dẫn hiện tại
+    const getKeyFromPathname = () => {
+        const path = location.pathname;
+        if (path.includes('/admin/user')) return 'user';
+        if (path.includes('/admin/book')) return 'book';
+        if (path.includes('/admin/order')) return 'order';
+        return 'dashboard';
     };
 
     const itemsDropdown = [
@@ -116,10 +125,9 @@ const LayoutAdmin = () => {
                 </div>
                 <Menu
                     theme="dark"
-                    defaultSelectedKeys={[activeMenu]}
                     mode="inline"
+                    selectedKeys={[getKeyFromPathname()]} // Chọn đúng menu item dựa vào đường dẫn hiện tại
                     items={items}
-                    onClick={(e) => setActiveMenu(e.key)}
                     style={{backgroundColor: '#1f1f1f'}} // Màu nền sidebar menu đồng nhất
                 />
             </Sider>

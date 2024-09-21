@@ -8,18 +8,18 @@ import {
     DeleteTwoTone,
     EditTwoTone
 } from '@ant-design/icons';
-import { callDeleteUser, callFetchListUser } from "../../../services/api.js";
+import {callDeleteUser, callFetchBooks} from "../../../services/api.js";
 import { FaEye } from "react-icons/fa";
 import InputSearch from './InputSearch';
-import UserViewDetail from "./UserViewDetail.jsx";
-import UserModalCreate from "./UserModalCreate.jsx";
-import UserImport from "./data/UserImport.jsx";
-import * as XLSX from "xlsx";
-import UserModalUpdate from "./UserModalUpdate.jsx";
+// import UserViewDetail from "./UserViewDetail.jsx";
+// import UserModalCreate from "./UserModalCreate.jsx";
+// import UserImport from "./data/UserImport.jsx";
+// import * as XLSX from "xlsx";
+// import UserModalUpdate from "./UserModalUpdate.jsx";
 import { CgColorPicker } from "react-icons/cg";
 
-const UserTable = () => {
-    const [listUser, setListUser] = useState([]);
+const BookTable = () => {
+    const [listBook, setListBook] = useState([]);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(2);
     const [total, setTotal] = useState(0);
@@ -38,35 +38,35 @@ const UserTable = () => {
 
 
     useEffect(() => {
-        fetchUsers();
+        fetchBooks()
     }, [current, pageSize, filter, sortQuery]);
 
-    const fetchUsers = async () => {
+    const fetchBooks = async () =>{
         setIsLoading(true);
         let query = `page=${current}&size=${pageSize}`;
         if (filter) query += `&${filter}`;
         if (sortQuery) query += `&${sortQuery}`;
-        const res = await callFetchListUser(query);
+
+        const res = await callFetchBooks(query);
+
         if (res && res.data) {
-            setListUser(res.data.result);
+            console.log(res)
+            setListBook(res.data.result);
             setTotal(res.data.meta.total);
         }
-        setIsLoading(false);
-    };
+        setIsLoading(false)
+    }
 
     const [selectedColumns, setSelectedColumns] = useState({
         id: true,
         name: true,
-        email: true,
-        age: true,
-        firstName: true,
-        gender: true,
-        address: false,
-        role: true,
-        phoneNumber: true,
-        enabled: false,
-        imageUrl: false,
+        author: true,
+        price: true,
+        quantity: true,
+        soldQuantity: true,
+        active: true,
         createdAt: false,
+        category: true,
         updatedAt: false,
         createdBy: false,
         updatedBy: false,
@@ -103,60 +103,49 @@ const UserTable = () => {
         </Menu>
     );
 
-
-
     const columns = [
         selectedColumns.id && {
             title: 'Id',
             dataIndex: 'id',
             sorter: true,
         },
-        selectedColumns.firstName && {
-            title: 'Firstname',
-            dataIndex: 'firstName',
-            sorter: true,
-        },
         selectedColumns.name && {
-            title: 'Lastname',
+            title: 'Name',
             dataIndex: 'name',
             sorter: true,
         },
-        selectedColumns.email && {
-            title: 'Email',
-            dataIndex: 'email',
+        selectedColumns.category && {
+            title: 'Category',
+            dataIndex: ['category', 'name'],
             sorter: true,
         },
-        selectedColumns.age && {
-            title: 'Age',
-            dataIndex: 'age',
+        selectedColumns.author && {
+            title: 'Author',
+            dataIndex: 'author',
             sorter: true,
         },
-        selectedColumns.gender && {
-            title: 'Gender',
-            dataIndex: 'gender',
+        selectedColumns.price && {
+            title: 'Price',
+            dataIndex: 'price',
             sorter: true,
         },
-        selectedColumns.address && {
-            title: 'Address',
-            dataIndex: 'address',
+        selectedColumns.quantity && {
+            title: 'Quantity',
+            dataIndex: 'quantity',
             sorter: true,
         },
-        selectedColumns.phoneNumber && {
-            title: 'Phone number',
-            dataIndex: 'phoneNumber',
+        selectedColumns.soldQuantity && {
+            title: 'Sold quantity',
+            dataIndex: 'soldQuantity',
             sorter: true,
         },
-        selectedColumns.enabled && {
-            title: 'Enabled',
-            dataIndex: 'enabled',
+        selectedColumns.active && {
+            title: 'Active',
+            dataIndex: 'active',
             sorter: true,
-            render: (enabled) => (enabled ? 'Enabled' : 'Disabled'), // Chuyển đổi giá trị true/false
+            render: (active) => (active ? 'Active' : 'Disabled'), // Chuyển đổi giá trị true/false
         },
-        selectedColumns.imageUrl && {
-            title: 'ImageUrl',
-            dataIndex: 'imageUrl',
-            sorter: true,
-        },
+
         selectedColumns.createdAt && {
             title: 'CreatedAt',
             dataIndex: 'createdAt',
@@ -177,11 +166,7 @@ const UserTable = () => {
             dataIndex: 'updatedBy',
             sorter: true,
         },
-        selectedColumns.role && {
-            title: 'Role',
-            dataIndex: ['role', 'name'],
-            sorter: true,
-        },
+
         selectedColumns.action && {
             title: 'Action',
             render: (text, record) => (
@@ -240,24 +225,18 @@ const UserTable = () => {
     };
 
     const handleExportData = () => {
-        if (listUser.length > 0) {
-            // Tạo bản sao của listUser và điều chỉnh dữ liệu trước khi xuất
-            const exportData = listUser.map(user => ({
-                ...user,
-                role: user.role?.name || '', // Lấy giá trị từ role.name hoặc để trống nếu không có
-            }));
-
-            const worksheet = XLSX.utils.json_to_sheet(exportData);
+        if (listBook.length > 0) {
+            const worksheet = XLSX.utils.json_to_sheet(listBook);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-            XLSX.writeFile(workbook, "ExportUser.csv");
+            XLSX.writeFile(workbook, "ExportBook.csv");
         }
     }
 
 
     const renderHeader = () => (
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 15 }}>
-            <span>Table Users</span>
+            <span>Table Books</span>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 15 }}>
                 <Dropdown
                     overlay={columnSelector}
@@ -268,7 +247,7 @@ const UserTable = () => {
                     <Button icon={<EditTwoTone/>} type="primary">Select Columns</Button>
                 </Dropdown>
                 <Button icon={<ExportOutlined />} type="primary" onClick={() => handleExportData()}>Export</Button>
-                <Button icon={<CloudUploadOutlined />} type="primary" onClick={() => setOpenModalImport(true)}>Import</Button>
+
                 <Button icon={<PlusOutlined />} type="primary" onClick={() => setOpenModalCreate(true)}>Thêm mới</Button>
                 <Button type="ghost" onClick={() => {
                     setFilter("");
@@ -292,7 +271,7 @@ const UserTable = () => {
                         title={renderHeader}
                         loading={isLoading}
                         columns={columns}
-                        dataSource={listUser}
+                        dataSource={listBook}
                         onChange={onChange}
                         rowKey="id"
                         pagination={{
@@ -304,32 +283,33 @@ const UserTable = () => {
                         }}
                     />
                 </Col>
-                <UserViewDetail
-                    openViewDetail={openViewDetail}
-                    setOpenViewDetail={setOpenViewDetail}
-                    dataViewDetail={dataViewDetail}
-                    setDataViewDetail={setDataViewDetail}
-                />
-                <UserModalCreate
-                    openModalCreate={openModalCreate}
-                    setOpenModalCreate={setOpenModalCreate}
-                    fetchUser={fetchUsers}
-                />
-                <UserImport
-                    openModalImport={openModalImport}
-                    setOpenModalImport={setOpenModalImport}
-                    fetchUser={fetchUsers}
-                />
-                <UserModalUpdate
-                    openModalUpdate={openModalUpdate}
-                    setOpenModalUpdate={setOpenModalUpdate}
-                    dataUpdate={dataUpdate}
-                    setDataUpdate={setDataUpdate}
-                    fetchUser={fetchUsers}
-                />
+                {/*<UserViewDetail*/}
+                {/*    openViewDetail={openViewDetail}*/}
+                {/*    setOpenViewDetail={setOpenViewDetail}*/}
+                {/*    dataViewDetail={dataViewDetail}*/}
+                {/*    setDataViewDetail={setDataViewDetail}*/}
+                {/*/>*/}
+                {/*<UserModalCreate*/}
+                {/*    openModalCreate={openModalCreate}*/}
+                {/*    setOpenModalCreate={setOpenModalCreate}*/}
+                {/*    fetchUser={fetchUsers}*/}
+                {/*/>*/}
+                {/*<UserImport*/}
+                {/*    openModalImport={openModalImport}*/}
+                {/*    setOpenModalImport={setOpenModalImport}*/}
+                {/*    fetchUser={fetchUsers}*/}
+                {/*/>*/}
+                {/*<UserModalUpdate*/}
+                {/*    openModalUpdate={openModalUpdate}*/}
+                {/*    setOpenModalUpdate={setOpenModalUpdate}*/}
+                {/*    dataUpdate={dataUpdate}*/}
+                {/*    setDataUpdate={setDataUpdate}*/}
+                {/*    fetchUser={fetchUsers}*/}
+                {/*/>*/}
             </Row>
         </>
     );
 };
 
-export default UserTable;
+export default BookTable;
+

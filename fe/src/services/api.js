@@ -48,3 +48,10 @@ export const callChangePassword = ({email, password, newPassword, confirmPasswor
 export const callUpdateInfo = ({id, firstName, name, userAvatar, gender, age, phoneNumber, address}) => {
     return axios.post('/api/v1/auth/update-info', {id, firstName, name, imageUrl: userAvatar, gender, age, phoneNumber, address});
 };
+
+export const callFetchBooks = (query) =>{
+    return axios.get(`/api/v1/book?${query}`);
+}
+export const callFetchCategory = () => {
+    return axios.get(`/api/v1/category/all`);
+}
