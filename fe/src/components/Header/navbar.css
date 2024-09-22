@@ -105,6 +105,19 @@ nav
     color: #333;
     text-decoration: none;
 }
+.search-bar {
+    flex: 1;
+    max-width: 400px; /* Adjust width as necessary */
+    margin: 0 auto; /* Center the search bar */
+}
+
+.search-bar .ant-input {
+    border-radius: 20px; /* Rounded corners */
+}
+
+.search-bar .ant-input:hover, .search-bar .ant-input:focus {
+    border-color: #1890ff; /* Change border color on hover/focus */
+}
 .nav .mobileHidden nav{
     display: flex;
     gap: 30px;

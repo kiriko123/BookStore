@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Divider, Badge, Drawer, message, Button, Anchor, Avatar, Modal} from 'antd';
+import {Divider, Badge, Drawer, message, Button, Anchor, Avatar, Modal, Input} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import {DownOutlined} from '@ant-design/icons';
 import {Dropdown, Space} from 'antd';
@@ -123,6 +123,15 @@ const Navbar = () => {
                         <i className="fas fa-bolt"></i>
                         <a href="http://google.com">BookStore</a>
                     </div>
+
+                    <div className="search-bar">
+                        <Input.Search
+                            placeholder="Search books..."
+                            enterButton
+                            onSearch={value => console.log(value)} // Handle search functionality here
+                        />
+                    </div>
+
                     <div className="mobileHidden">
                         <nav>
                             <div>
@@ -194,7 +203,8 @@ const Navbar = () => {
                                             <span><RiLoginCircleFill/>Login/Register</span>
                                         </div>
                                     ) : (
-                                        <div className="mobileVisible-nav-div" onClick={showModal} style={{cursor: 'pointer'}}>
+                                        <div className="mobileVisible-nav-div" onClick={showModal}
+                                             style={{cursor: 'pointer'}}>
                                             <Space style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                                                 <Avatar src={urlAvatar}/>
                                                 <span>{user?.name}</span>

@@ -76,19 +76,6 @@ const UserModalUpdate = (props) => {
                         </Col>
                     </Row>
 
-                    {/*<Row gutter={16}>*/}
-                    {/*    <Col span={12}>*/}
-                    {/*        <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>*/}
-                    {/*            <Input.Password />*/}
-                    {/*        </Form.Item>*/}
-                    {/*    </Col>*/}
-                    {/*    <Col span={12}>*/}
-                    {/*        <Form.Item label="Password confirm" name="passwordConfirm" rules={[{ required: true, message: 'Vui lòng nhập password confirm!' }]}>*/}
-                    {/*            <Input.Password />*/}
-                    {/*        </Form.Item>*/}
-                    {/*    </Col>*/}
-                    {/*</Row>*/}
-
                     <Form.Item label="Address" name="address" rules={[{ required: true, message: 'Address không được để trống!' }]}>
                         <Input />
                     </Form.Item>

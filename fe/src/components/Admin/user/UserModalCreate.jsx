@@ -51,11 +51,11 @@ const UserModalCreate = (props) => {
                     form={form} //quy dinh Form la form khi submit cai model se submit form luon
                     name="basic"
                     style={{maxWidth: 600}}
-                    layout="vertical"
+
                     onFinish={onFinish}
                     autoComplete="off"
                 >
-                    <Form.Item labelCol={{ span: 24 }} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email!' }]}>
+                    <Form.Item  label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email!' }]}>
                         <Input />
                     </Form.Item>
 
@@ -103,7 +103,6 @@ const UserModalCreate = (props) => {
                     </Row>
 
                     <Form.Item
-                        labelCol={{span: 24}}
                         label="Gender"
                         name="gender"
                         initialValue={'MALE'}

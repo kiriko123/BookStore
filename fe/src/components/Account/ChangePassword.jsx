@@ -36,26 +36,26 @@ const ChangePassword = (props) => {
     };
 
     return (
-        <div style={{ minHeight: 400, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
+        <div style={{ minHeight: 350, display: "flex", justifyContent: "center", boxShadow: '0 4px 8px rgba(0,0,0,0.1)', padding: "0px" }}>
             <Row justify="center">
                 <Col span={24}> {/* Tăng chiều rộng lên 12 cột, bạn có thể tăng thêm nếu muốn */}
                     <Form
                         name="changePassword"
                         onFinish={onFinish}
                         autoComplete="off"
+
                         form={form}
-                        layout="vertical"
                         style={{
                             backgroundColor: "#fff",
-                            padding: "20px",
+                            padding: "20px 0px 0px 0px",
                             borderRadius: "8px",
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                            width: "50vw" // Đặt chiều rộng cố định lớn hơn
+                            width: "40vw" // Đặt chiều rộng cố định lớn hơn
                         }}
                     >
                         <Form.Item
                             label="Email"
                             name="email"
+                            labelCol={{ span: 24 }}
                             initialValue={user?.email}
                             rules={[{ required: true, message: "Email không được để trống!" }]}
                         >
@@ -65,29 +65,41 @@ const ChangePassword = (props) => {
                         <Form.Item
                             label="Mật khẩu hiện tại"
                             name="password"
+                            labelCol={{ span: 24 }}
                             rules={[{ required: true, message: "Mật khẩu không được để trống!" }]}
                         >
                             <Input.Password style={{ borderRadius: "8px" }} />
                         </Form.Item>
 
-                        <Form.Item
-                            label="Mật khẩu mới"
-                            name="newPassword"
-                            rules={[
-                                { required: true, message: "Mật khẩu mới không được để trống!" },
-                                { min: 6, message: "Mật khẩu mới phải có ít nhất 6 ký tự!" },
-                            ]}
-                        >
-                            <Input.Password style={{ borderRadius: "8px" }} />
-                        </Form.Item>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item
+                                    label="Mật khẩu mới"
+                                    name="newPassword"
+                                    labelCol={{ span: 24 }}
+                                    rules={[
+                                        { required: true, message: "Mật khẩu mới không được để trống!" },
+                                        { min: 6, message: "Mật khẩu mới phải có ít nhất 6 ký tự!" },
+                                    ]}
+                                >
+                                    <Input.Password style={{ borderRadius: "8px" }} />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    label="Nhập lại mật khẩu mới"
+                                    name="confirmPassword"
+                                    labelCol={{ span: 24 }}
+                                    rules={[{ required: true, message: "Nhập lại mật khẩu không được để trống!" }]}
+                                >
+                                    <Input.Password style={{ borderRadius: "8px" }} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
-                        <Form.Item
-                            label="Nhập lại mật khẩu mới"
-                            name="confirmPassword"
-                            rules={[{ required: true, message: "Nhập lại mật khẩu không được để trống!" }]}
-                        >
-                            <Input.Password style={{ borderRadius: "8px" }} />
-                        </Form.Item>
+
+
+
 
                         <Form.Item>
                             <Button

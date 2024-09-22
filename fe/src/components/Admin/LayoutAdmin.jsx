@@ -132,7 +132,7 @@ const LayoutAdmin = () => {
                 />
             </Sider>
             <Layout>
-                <div className='admin-header' style={{backgroundColor: '#4c2b5a', color: '#fff', padding: '0 16px'}}>
+                <div className='admin-header' style={{backgroundColor: '#1f1f1f', color: '#fff', padding: '0 16px'}}>
                     <span>
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
@@ -145,7 +145,7 @@ const LayoutAdmin = () => {
                             <Space style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                                 <Avatar src={urlAvatar}/>
                                 <span>
-                                    <span>Welcome {user?.name} </span>
+                                    <span>Welcome back: {user?.name} </span>
                                     <DownOutlined/>
                                 </span>
                             </Space>
@@ -154,8 +154,8 @@ const LayoutAdmin = () => {
                 </div>
                 <Content
                     style={{
-                        margin: '24px 16px',
-                        padding: 24,
+                        margin: '10px 10px',
+                        padding: 10,
                         minHeight: 280,
                         backgroundColor: '#fff', // Vùng content nền trắng sáng
                     }}
