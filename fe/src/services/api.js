@@ -55,3 +55,12 @@ export const callFetchBooks = (query) =>{
 export const callFetchCategory = () => {
     return axios.get(`/api/v1/category/all`);
 }
+export const callCreateBook = ({name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders}) => {
+    return axios.post('api/v1/book', {name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders})
+}
+export const callDeleteBook = (bookId) =>{
+    return axios.delete(`/api/v1/book/${bookId}`);
+}
+export const callUpdateBook = ({id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders}) => {
+    return axios.put('api/v1/book', {id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders})
+}

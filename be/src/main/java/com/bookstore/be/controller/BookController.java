@@ -2,6 +2,7 @@ package com.bookstore.be.controller;
 
 import com.bookstore.be.dto.request.book.BookCreateDTO;
 import com.bookstore.be.dto.request.book.BookUpdateDTO;
+import com.bookstore.be.dto.response.RestResponse;
 import com.bookstore.be.model.Book;
 import com.bookstore.be.service.BookService;
 import com.turkraft.springfilter.boot.Filter;
@@ -37,10 +38,13 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@Min(1)@PathVariable Long id){
+    public RestResponse<?> delete(@Min(1)@PathVariable Long id){
         log.info("Delete Book : {}", id);
         bookService.deleteBook(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return RestResponse.builder()
+                .statusCode(204)
+                .message("Book deleted")
+                .build();
     }
     @GetMapping
     public ResponseEntity<?> getAll(@Filter Specification<Book> specification, Pageable pageable){

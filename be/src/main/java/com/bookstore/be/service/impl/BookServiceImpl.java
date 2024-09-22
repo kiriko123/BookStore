@@ -6,6 +6,7 @@ import com.bookstore.be.dto.response.ResultPaginationResponse;
 import com.bookstore.be.dto.response.book.BookResponse;
 import com.bookstore.be.exception.ResourceNotFoundException;
 import com.bookstore.be.model.Book;
+import com.bookstore.be.model.Category;
 import com.bookstore.be.repository.BookRepository;
 import com.bookstore.be.repository.CategoryRepository;
 import com.bookstore.be.service.BookService;
@@ -35,6 +36,11 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Book name already exists");
         }
 
+        Category category = categoryRepository.findByName(bookCreateDTO.getCategoryName());
+        if(category == null) {
+            throw new IllegalArgumentException("Category not found");
+        }
+
         Book book = Book.builder()
                 .name(bookCreateDTO.getName())
                 .author(bookCreateDTO.getAuthor())
@@ -42,8 +48,7 @@ public class BookServiceImpl implements BookService {
                 .quantity(bookCreateDTO.getQuantity())
                 .soldQuantity(bookCreateDTO.getSoldQuantity())
                 .thumbnail(bookCreateDTO.getThumbnail())
-                .category(categoryRepository.findById(bookCreateDTO.getCategoryId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Category not found")))
+                .category(category)
                 .sliders(bookCreateDTO.getSliders())
                 .active(true)
                 .build();
@@ -54,14 +59,19 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse updateBook(BookUpdateDTO bookUpdateDTO) {
         Book currentBook = getBookById(bookUpdateDTO.getId());
+
+        Category category = categoryRepository.findByName(bookUpdateDTO.getCategoryName());
+        if(category == null) {
+            throw new IllegalArgumentException("Category not found");
+        }
+
         currentBook.setName(bookUpdateDTO.getName());
         currentBook.setAuthor(bookUpdateDTO.getAuthor());
         currentBook.setPrice(bookUpdateDTO.getPrice());
         currentBook.setQuantity(bookUpdateDTO.getQuantity());
         currentBook.setSoldQuantity(bookUpdateDTO.getSoldQuantity());
         currentBook.setThumbnail(bookUpdateDTO.getThumbnail());
-        currentBook.setCategory(categoryRepository.findById(bookUpdateDTO.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found")));
+        currentBook.setCategory(category);
         currentBook.setSliders(bookUpdateDTO.getSliders());
 
         return BookResponse.from(bookRepository.save(currentBook));

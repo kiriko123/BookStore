@@ -8,15 +8,18 @@ import {
     DeleteTwoTone,
     EditTwoTone
 } from '@ant-design/icons';
-import {callDeleteUser, callFetchBooks} from "../../../services/api.js";
+import {callDeleteBook, callDeleteUser, callFetchBooks} from "../../../services/api.js";
 import { FaEye } from "react-icons/fa";
 import InputSearch from './InputSearch';
 // import UserViewDetail from "./UserViewDetail.jsx";
 // import UserModalCreate from "./UserModalCreate.jsx";
 // import UserImport from "./data/UserImport.jsx";
-// import * as XLSX from "xlsx";
 // import UserModalUpdate from "./UserModalUpdate.jsx";
 import { CgColorPicker } from "react-icons/cg";
+import BookViewDetail from "./BookViewDetail.jsx";
+import * as XLSX from "xlsx";
+import BookModalCreate from "./BookModelCreate.jsx";
+import BookModalUpdate from "./BookModalUpdate.jsx";
 
 const BookTable = () => {
     const [listBook, setListBook] = useState([]);
@@ -30,12 +33,8 @@ const BookTable = () => {
     const [dataViewDetail, setDataViewDetail] = useState(null);
     const [openModalCreate, setOpenModalCreate] = useState(false);
 
-    const [openModalImport, setOpenModalImport] = useState(false);
-
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
-
-
 
     useEffect(() => {
         fetchBooks()
@@ -65,8 +64,8 @@ const BookTable = () => {
         quantity: true,
         soldQuantity: true,
         active: true,
-        createdAt: false,
         category: true,
+        createdAt: false,
         updatedAt: false,
         createdBy: false,
         updatedBy: false,
@@ -177,9 +176,9 @@ const BookTable = () => {
                     }} />
                     <Popconfirm
                         placement="leftTop"
-                        title="Xác nhận xóa user"
-                        description="Bạn có chắc chắn muốn xóa user này?"
-                        onConfirm={() => handleDeleteUser(record.id)}
+                        title="Xác nhận xóa book"
+                        description="Bạn có chắc chắn muốn xóa book này?"
+                        onConfirm={() => handleDeleteBook(record.id)}
                         okText="Xác nhận"
                         cancelText="Hủy"
                     >
@@ -211,11 +210,11 @@ const BookTable = () => {
         }
     };
 
-    const handleDeleteUser = async (userId) => {
-        const res = await callDeleteUser(userId);
+    const handleDeleteBook = async (bookId) => {
+        const res = await callDeleteBook(bookId);
         if (res?.data?.statusCode === 204) {
-            message.success('Xóa user thành công');
-            fetchUsers();
+            message.success('Xóa book thành công');
+            await fetchBooks()
         } else {
             notification.error({
                 message: 'Có lỗi xảy ra',
@@ -283,29 +282,24 @@ const BookTable = () => {
                         }}
                     />
                 </Col>
-                {/*<UserViewDetail*/}
-                {/*    openViewDetail={openViewDetail}*/}
-                {/*    setOpenViewDetail={setOpenViewDetail}*/}
-                {/*    dataViewDetail={dataViewDetail}*/}
-                {/*    setDataViewDetail={setDataViewDetail}*/}
-                {/*/>*/}
-                {/*<UserModalCreate*/}
-                {/*    openModalCreate={openModalCreate}*/}
-                {/*    setOpenModalCreate={setOpenModalCreate}*/}
-                {/*    fetchUser={fetchUsers}*/}
-                {/*/>*/}
-                {/*<UserImport*/}
-                {/*    openModalImport={openModalImport}*/}
-                {/*    setOpenModalImport={setOpenModalImport}*/}
-                {/*    fetchUser={fetchUsers}*/}
-                {/*/>*/}
-                {/*<UserModalUpdate*/}
-                {/*    openModalUpdate={openModalUpdate}*/}
-                {/*    setOpenModalUpdate={setOpenModalUpdate}*/}
-                {/*    dataUpdate={dataUpdate}*/}
-                {/*    setDataUpdate={setDataUpdate}*/}
-                {/*    fetchUser={fetchUsers}*/}
-                {/*/>*/}
+                <BookViewDetail
+                    openViewDetail={openViewDetail}
+                    setOpenViewDetail={setOpenViewDetail}
+                    dataViewDetail={dataViewDetail}
+                    setDataViewDetail={setDataViewDetail}
+                />
+                <BookModalCreate
+                    openModalCreate={openModalCreate}
+                    setOpenModalCreate={setOpenModalCreate}
+                    fetchBook={fetchBooks}
+                />
+                <BookModalUpdate
+                    openModalUpdate={openModalUpdate}
+                    setOpenModalUpdate={setOpenModalUpdate}
+                    dataUpdate={dataUpdate}
+                    setDataUpdate={setDataUpdate}
+                    fetchBook={fetchBooks}
+                />
             </Row>
         </>
     );

@@ -29,7 +29,8 @@ public class BookUpdateDTO {
 
     String thumbnail;
 
-    long categoryId;
+    @NotBlank
+    String categoryName;
 
     List<String> sliders;
 }

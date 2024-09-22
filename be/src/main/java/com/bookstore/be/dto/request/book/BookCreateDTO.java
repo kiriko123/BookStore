@@ -26,8 +26,9 @@ public class BookCreateDTO {
     int soldQuantity;
 
     String thumbnail;
-    @Min(1)
-    long categoryId;
+
+    @NotBlank
+    String categoryName;
 
     List<String> sliders;
 }

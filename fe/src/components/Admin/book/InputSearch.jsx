@@ -30,7 +30,10 @@ const InputSearch = (props) => {
 
         if(res && res.data){
             console.log(res.data);
-            setListCategory(res.data);
+            const d = res.data.map( item =>{
+                return {label: item.name, value: item.name};
+            })
+            setListCategory(d);
         }
 
     }
@@ -45,7 +48,7 @@ const InputSearch = (props) => {
             queryParts.push(`author~%27${values.author}%27`);
         }
         if (values.category) {
-            queryParts.push(`category.id~%27${values.category}%27`);
+            queryParts.push(`category.name~%27${values.category}%27`);
         }
         if (queryParts.length > 0) {
             const query = `filter=${queryParts.join('%20and%20')}`;
@@ -84,14 +87,20 @@ const InputSearch = (props) => {
                         name={`category`}
                         label={`Category`}
                     >
-                        <Select placeholder="Select category">
-                            {/* Duyệt qua listCategory và hiển thị từng option */}
-                            {listCategory && listCategory.map((category) => (
-                                <Option key={category.id} value={category.id}>
-                                    {category.name}
-                                </Option>
-                            ))}
-                        </Select>
+                        <Select
+                            defaultValue={null}
+                            showSearch
+                            allowClear
+                            options={listCategory}
+                        />
+                        {/*<Select placeholder="Select category">*/}
+                        {/*    /!* Duyệt qua listCategory và hiển thị từng option *!/*/}
+                        {/*    {listCategory && listCategory.map((category) => (*/}
+                        {/*        <Option key={category.id} value={category.id}>*/}
+                        {/*            {category.name}*/}
+                        {/*        </Option>*/}
+                        {/*    ))}*/}
+                        {/*</Select>*/}
                     </Form.Item>
                 </Col>
             </Row>
