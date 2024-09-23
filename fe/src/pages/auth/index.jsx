@@ -37,7 +37,7 @@ export default function Auth() {
     <AuthContext.Provider value={store}>
         <div className="auth-page">
           <Helmet>
-            <title>Authentication</title>
+            <title></title>
             <meta name="description" content="React App authentication"/>
           </Helmet>
 

@@ -77,6 +77,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authz -> authz
                                 .requestMatchers(whiteList).permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/book").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/category/all").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/user").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasRole("ADMIN")
 

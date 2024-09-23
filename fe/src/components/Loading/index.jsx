@@ -1,4 +1,4 @@
-import { PacmanLoader } from "react-spinners";
+import { PacmanLoader, HashLoader} from "react-spinners";
 
 const Loading = () => {
     const style = {
@@ -9,16 +9,16 @@ const Loading = () => {
     };
 
     const linkStyle = {
-        color: "#",
+        color: "#3a6073",
         cursor: "pointer",
         textDecoration: "none",
-        fontSize: "16px",
+        fontSize: "15px",
         fontWeight: "bold"
     };
 
     return (
         <div style={style}>
-            <PacmanLoader color="#000000"/>
+            <PacmanLoader color="#3a7bd5"/>
             <a href="/auth" style={linkStyle}>
                 Login nào!
             </a>
