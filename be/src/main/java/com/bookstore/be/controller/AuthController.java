@@ -262,11 +262,6 @@ public class AuthController {
             String firstName = (String) userInfo.get("given_name");
             String lastName = (String) userInfo.get("family_name");
 
-            ///////////////////
-            if(lastName.equals("(FPL HCM)")){
-                throw new RuntimeException("FPOLY === CÚT");
-            }
-            /////////////////////////
             User existingUser = userService.findByEmail(email);
 
             // Nếu user chưa tồn tại, tạo mới với mật khẩu ngẫu nhiên
