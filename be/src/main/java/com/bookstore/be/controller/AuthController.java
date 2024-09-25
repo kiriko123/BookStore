@@ -106,12 +106,6 @@ public class AuthController {
                 .path("/")
                 .maxAge(refreshTokenExpiration)
                 .build();
-        
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
