@@ -1,39 +1,38 @@
-/*
-footer
+/* footer
 ------
 */
 .footer {
     width: 100%;
-    padding: 10px 0;
-    background-color: #f8f8f8;
+    padding: 2rem 0; /* Increased padding for more breathing space */
+    background-color: #0f3460; /* Dark background for a modern look */
     text-align: center;
-    border-top: 1px solid #e0e0e0;
+    color: #fff; /* White text for contrast */
 }
 
 .footer .logo {
-    font-size: 24px;
+    font-size: 1.8rem;
     text-transform: uppercase;
-    font-weight: 400;
-    margin-bottom: 20px;
+    font-weight: 600; /* Bolder font */
+    margin-bottom: 1.5rem;
 }
 
 .footer .logo i {
     color: #1890ff;
-    margin-right: 10px;
-    font-size: 28px;
+    margin-right: 0.5rem;
+    font-size: 2rem;
 }
 
 .footer .logo a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
 }
 
 .footer .socials {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 1.5rem; /* Added bottom margin */
     display: flex;
-    gap: 18px;
+    gap: 1.2rem;
     justify-content: center;
 }
 
@@ -42,9 +41,10 @@ footer
 }
 
 .footer .socials a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 1.5rem;
+    transition: color 0.3s; /* Smooth color transition on hover */
 }
 
 .footer .socials a:hover {
@@ -52,9 +52,8 @@ footer
 }
 
 .footer .copyright {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #777;
+    font-size: 0.9rem;
+    color: #aaa; /* Lighter gray for copyright text */
 }
 
 /* BackTop */
@@ -68,7 +67,12 @@ footer
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1.25rem;
+    transition: background-color 0.3s; /* Smooth color transition on hover */
+}
+
+.goTop:hover {
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 .goTop i {
@@ -84,20 +88,20 @@ footer
 /* Responsive */
 @media only screen and (max-width: 767px) {
     .footer .logo {
-        font-size: 20px;
+        font-size: 1.5rem;
     }
 
     .footer .socials a {
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 
     .footer .copyright {
-        font-size: 12px;
+        font-size: 0.8rem;
     }
 
     .goTop {
         width: 35px;
         height: 35px;
-        font-size: 18px;
+        font-size: 1rem;
     }
 }

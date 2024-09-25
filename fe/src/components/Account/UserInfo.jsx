@@ -1,5 +1,5 @@
 import { AntDesignOutlined, UploadOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Form, Input, Row, Upload, message, notification, InputNumber, Radio } from "antd";
+import {Avatar, Button, Col, Form, Input, Row, Upload, message, notification, InputNumber, Radio, Modal} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { callUpdateInfo, callUploadFile } from "../../services/api.js";
@@ -15,6 +15,8 @@ const UserInfo = (props) => {
     const [isSubmit, setIsSubmit] = useState(false);
 
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/storage/avatar/${tempAvatar || user?.imageUrl}`;
+
+    const [previewOpen, setPreviewOpen] = useState(false);
 
     const handleUploadAvatar = async ({ file, onSuccess, onError }) => {
         const res = await callUploadFile(file, 'avatar');
@@ -58,6 +60,11 @@ const UserInfo = (props) => {
         setIsSubmit(false);
     };
 
+    const handleCancel = () => setPreviewOpen(false);
+    const handlePreview = async (file) => {
+        setPreviewOpen(true);
+    };
+
     return (
         <div style={{ minHeight: 400, padding: '20px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
             <Row gutter={40}>
@@ -67,6 +74,7 @@ const UserInfo = (props) => {
                         icon={<AntDesignOutlined />}
                         src={urlAvatar}
                         shape="circle"
+                        onClick={handlePreview}
                         style={{ marginBottom: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
                     />
                     <Upload {...propsUpload}>
@@ -178,6 +186,9 @@ const UserInfo = (props) => {
                     </Form>
                 </Col>
             </Row>
+            <Modal open={previewOpen} title={urlAvatar} footer={null} onCancel={handleCancel} centered>
+                <img alt="example" style={{ width: '100%' }} src={urlAvatar} />
+            </Modal>
         </div>
     );
 };

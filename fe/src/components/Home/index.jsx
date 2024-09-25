@@ -1,11 +1,15 @@
-import { FilterTwoTone, ReloadOutlined } from '@ant-design/icons';
-import { Row, Col, Form, Checkbox, Divider, InputNumber, Button, Rate, Tabs, Pagination, Spin } from 'antd';
-import { useEffect, useState } from 'react';
-import { callFetchCategory, callFetchBooks } from '../../services/api';
+import {FilterTwoTone, ReloadOutlined} from '@ant-design/icons';
+import {Row, Col, Form, Checkbox, Divider, InputNumber, Button, Rate, Tabs, Pagination, Spin} from 'antd';
+import {useEffect, useState} from 'react';
+import {callFetchCategory, callFetchBooks} from '../../services/api';
 import './home.scss';
+import {useNavigate} from "react-router-dom";
+
 const Home = () => {
 
     const [listCategory, setListCategory] = useState([]);
+
+    const navigate = useNavigate();
 
     const [listBook, setListBook] = useState([]);
     const [current, setCurrent] = useState(1);
@@ -23,7 +27,7 @@ const Home = () => {
             const res = await callFetchCategory();
             if (res && res.data) {
                 const d = res.data.map(item => {
-                    return { label: item.name, value: item.name }
+                    return {label: item.name, value: item.name}
                 })
                 setListCategory(d);
             }
@@ -72,20 +76,20 @@ const Home = () => {
 
             if (cate && cate.length > 0) {
                 if (cate.length === 1) {
-                    // Nếu chỉ có 1 giá trị, không thêm 'or'
-                    setFilter(`filter=category.name:%27${cate[0]}%27`);
+                    // Nếu chỉ có 1 giá trị, không cần 'in'
+                    setFilter(`filter=category.name%20%3A%27${cate[0]}%27`);  // '%20%3A' mã hóa cho ':'
                 } else {
-                    // Nếu có nhiều hơn 1 giá trị, thêm 'or' giữa các giá trị
-                    const f = cate.map(c => `category.name:%27${c}%27`).join(' or ');
+                    // Nếu có nhiều hơn 1 giá trị, sử dụng 'in' và mã hóa các ký tự
+                    const f = `category.name%20in%20%5B${cate.map(c => `%27${c}%27`).join('%2C%20')}%5D`;  // %5B, %5D là dấu ngoặc vuông, %2C là dấu phẩy
                     setFilter(`filter=${f}`);
                 }
-            }
-            else {
+            } else {
                 // reset dữ liệu -> fetch tất cả
                 setFilter('');
             }
         }
     };
+
 
     const onFinish = (values) => {
         let f = '';
@@ -100,18 +104,16 @@ const Home = () => {
         if (values?.category?.length) {
             let cateFilter;
             if (values?.category.length === 1) {
-                // Nếu chỉ có 1 giá trị category, không cần 'or'
-                cateFilter = `category.name:%27${values.category[0]}%27`;
+                // Nếu chỉ có 1 giá trị category, không cần 'in'
+                cateFilter = `category.name%20%3A%27${values.category[0]}%27`;  // %27 là dấu nháy đơn
             } else {
-                // Nếu có nhiều giá trị, thêm 'or' giữa các giá trị
-                cateFilter = values?.category
-                    .map(c => `category.name:%27${c}%27`)
-                    .join(' or ');
+                // Nếu có nhiều giá trị, sử dụng 'in'
+                cateFilter = `category.name%20in%20%5B${values.category.map(c => `%27${c}%27`).join('%2C%20')}%5D`;  // %5B, %5D là dấu ngoặc vuông
             }
 
             // nếu f có chứa giá trị price, nối thêm filter cho category
             if (f) {
-                f += ` and (${cateFilter})`;
+                f += `%20and%20(${cateFilter})`;  // %20 là khoảng trắng, nối các điều kiện với 'and'
             } else {
                 // nếu không có giá trị price, chỉ thêm category vào filter
                 f = `filter=(${cateFilter})`;
@@ -126,8 +128,6 @@ const Home = () => {
             setFilter(f);
         }
     };
-
-
 
 
     const items = [
@@ -153,15 +153,60 @@ const Home = () => {
         },
     ];
 
+    const nonAccentVietnamese = (str) => {
+        str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+        str = str.replace(/E|É|È|Ẽ|Ẹ|Ê|Ế|Ề|Ễ|Ệ/, "E");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+        str = str.replace(/I|Í|Ì|Ĩ|Ị/g, "I");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+        str = str.replace(/O|Ó|Ò|Õ|Ọ|Ô|Ố|Ồ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ỡ|Ợ/g, "O");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+        str = str.replace(/U|Ú|Ù|Ũ|Ụ|Ư|Ứ|Ừ|Ữ|Ự/g, "U");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+        str = str.replace(/Y|Ý|Ỳ|Ỹ|Ỵ/g, "Y");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+        str = str.replace(/Đ/g, "D");
+        str = str.replace(/đ/g, "d");
+        // Some system encode vietnamese combining accent as individual utf-8 characters
+        str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
+        str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+        return str;
+    }
+
+    const convertSlug = (str) => {
+        str = nonAccentVietnamese(str);
+        str = str.replace(/^\s+|\s+$/g, ''); // trim
+        str = str.toLowerCase();
+
+        // remove accents, swap ñ for n, etc
+        const from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞĐđßÆa·/_,:;";
+        const to = "AAAAAACCCDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbBDdBAa------";
+        for (let i = 0, l = from.length; i < l; i++) {
+            str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        }
+
+        str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+            .replace(/\s+/g, '-') // collapse whitespace and replace by -
+            .replace(/-+/g, '-'); // collapse dashes
+
+        return str;
+    }
+
+    const handleRedirectBook = (book) =>{
+        const slug = convertSlug(book.name);
+        navigate(`/book/${slug}?id=${book.id}`);
+    }
+
     return (
-        <div style={{ background: '#efefef', padding: "20px 0" }}>
-            <div className="homepage-container" style={{ maxWidth: 1440, margin: '0 auto' }}>
+        <div style={{background: '#efefef', padding: "20px 0"}}>
+            <div className="homepage-container" style={{maxWidth: 1440, margin: '0 auto'}}>
                 <Row gutter={[20, 20]}>
                     <Col md={4} sm={0} xs={0}>
-                        <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
-                            <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                                <span> <FilterTwoTone />
-                                    <span style={{ fontWeight: 500 }}> Bộ lọc tìm kiếm</span>
+                        <div style={{padding: "20px", background: '#fff', borderRadius: 5}}>
+                            <div style={{display: 'flex', justifyContent: "space-between"}}>
+                                <span> <FilterTwoTone/>
+                                    <span style={{fontWeight: 500}}> Bộ lọc tìm kiếm</span>
                                 </span>
                                 <ReloadOutlined title="Reset" onClick={() => {
                                     form.resetFields();
@@ -169,7 +214,7 @@ const Home = () => {
                                 }}
                                 />
                             </div>
-                            <Divider />
+                            <Divider/>
                             <Form
                                 onFinish={onFinish}
                                 form={form}
@@ -178,14 +223,14 @@ const Home = () => {
                                 <Form.Item
                                     name="category"
                                     label="Danh mục sản phẩm"
-                                    labelCol={{ span: 24 }}
+                                    labelCol={{span: 24}}
                                 >
                                     <Checkbox.Group>
                                         <Row>
                                             {listCategory?.map((item, index) => {
                                                 return (
-                                                    <Col span={24} key={`index-${index}`} style={{ padding: '7px 0' }}>
-                                                        <Checkbox value={item.value} >
+                                                    <Col span={24} key={`index-${index}`} style={{padding: '7px 0'}}>
+                                                        <Checkbox value={item.value}>
                                                             {item.label}
                                                         </Checkbox>
                                                     </Col>
@@ -194,12 +239,12 @@ const Home = () => {
                                         </Row>
                                     </Checkbox.Group>
                                 </Form.Item>
-                                <Divider />
+                                <Divider/>
                                 <Form.Item
                                     label="Khoảng giá"
-                                    labelCol={{ span: 24 }}
+                                    labelCol={{span: 24}}
                                 >
-                                    <Row gutter={[10, 10]} style={{ width: "100%" }}>
+                                    <Row gutter={[10, 10]} style={{width: "100%"}}>
                                         <Col xl={11} md={24}>
                                             <Form.Item name={["range", 'from']}>
                                                 <InputNumber
@@ -207,12 +252,12 @@ const Home = () => {
                                                     min={0}
                                                     placeholder="đ TỪ"
                                                     // formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                                    style={{ width: '100%' }}
+                                                    style={{width: '100%'}}
                                                 />
                                             </Form.Item>
                                         </Col>
                                         <Col xl={2} md={0}>
-                                            <div > - </div>
+                                            <div> -</div>
                                         </Col>
                                         <Col xl={11} md={24}>
                                             <Form.Item name={["range", 'to']}>
@@ -221,39 +266,39 @@ const Home = () => {
                                                     min={0}
                                                     placeholder="đ ĐẾN"
                                                     // formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                                    style={{ width: '100%' }}
+                                                    style={{width: '100%'}}
                                                 />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <div>
                                         <Button onClick={() => form.submit()}
-                                                style={{ width: "100%" }} type='primary'>Áp dụng</Button>
+                                                style={{width: "100%"}} type='primary'>Áp dụng</Button>
                                     </div>
                                 </Form.Item>
-                                <Divider />
+                                <Divider/>
                                 <Form.Item
                                     label="Đánh giá"
-                                    labelCol={{ span: 24 }}
+                                    labelCol={{span: 24}}
                                 >
                                     <div>
-                                        <Rate value={5} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
+                                        <Rate value={5} disabled style={{color: '#ffce3d', fontSize: 15}}/>
                                         <span className="ant-rate-text"></span>
                                     </div>
                                     <div>
-                                        <Rate value={4} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
+                                        <Rate value={4} disabled style={{color: '#ffce3d', fontSize: 15}}/>
                                         <span className="ant-rate-text">trở lên</span>
                                     </div>
                                     <div>
-                                        <Rate value={3} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
+                                        <Rate value={3} disabled style={{color: '#ffce3d', fontSize: 15}}/>
                                         <span className="ant-rate-text">trở lên</span>
                                     </div>
                                     <div>
-                                        <Rate value={2} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
+                                        <Rate value={2} disabled style={{color: '#ffce3d', fontSize: 15}}/>
                                         <span className="ant-rate-text">trở lên</span>
                                     </div>
                                     <div>
-                                        <Rate value={1} disabled style={{ color: '#ffce3d', fontSize: 15 }} />
+                                        <Rate value={1} disabled style={{color: '#ffce3d', fontSize: 15}}/>
                                         <span className="ant-rate-text">trở lên</span>
                                     </div>
                                 </Form.Item>
@@ -261,31 +306,39 @@ const Home = () => {
                         </div>
                     </Col>
 
-                    <Col md={20} xs={24} >
+                    <Col md={20} xs={24}>
                         <Spin spinning={isLoading} tip="Loading...">
-                            <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
-                                <Row >
+                            <div style={{padding: "20px", background: '#fff', borderRadius: 5}}>
+                                <Row>
                                     <Tabs
                                         defaultActiveKey="sort=-sold"
                                         items={items}
-                                        onChange={(value) => { setSortQuery(value) }}
-                                        style={{ overflowX: "auto" }}
+                                        onChange={(value) => {
+                                            setSortQuery(value)
+                                        }}
+                                        style={{overflowX: "auto"}}
                                     />
                                 </Row>
                                 <Row className='customize-row'>
                                     {listBook?.map((item, index) => {
                                         return (
-                                            <div className="column" key={`book-${index}`}>
+                                            <div className="column" key={`book-${index}`} onClick={() => handleRedirectBook(item)}>
                                                 <div className='wrapper'>
                                                     <div className='thumbnail'>
-                                                        <img src={`${import.meta.env.VITE_BACKEND_URL}/storage/book/${item.thumbnail}`} alt="thumbnail book" />
+                                                        <img
+                                                            src={`${import.meta.env.VITE_BACKEND_URL}/storage/book/${item.thumbnail}`}
+                                                            alt="thumbnail book"/>
                                                     </div>
                                                     <div className='text' title={item.name}>{item.name}</div>
                                                     <div className='price'>
-                                                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item?.price ?? 0)}
+                                                        {new Intl.NumberFormat('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND'
+                                                        }).format(item?.price ?? 0)}
                                                     </div>
                                                     <div className='rating'>
-                                                        <Rate value={5} disabled style={{ color: '#ffce3d', fontSize: 10 }} />
+                                                        <Rate value={5} disabled
+                                                              style={{color: '#ffce3d', fontSize: 10}}/>
                                                         <span>Đã bán {item.soldQuantity}</span>
                                                     </div>
                                                 </div>
@@ -295,14 +348,14 @@ const Home = () => {
 
 
                                 </Row>
-                                <div style={{ marginTop: 30 }}></div>
-                                <Row style={{ display: "flex", justifyContent: "center" }}>
+                                <div style={{marginTop: 30}}></div>
+                                <Row style={{display: "flex", justifyContent: "center"}}>
                                     <Pagination
                                         current={current}
                                         total={total}
                                         pageSize={pageSize}
                                         responsive
-                                        onChange={(p, s) => handleOnchangePage({ current: p, pageSize: s })}
+                                        onChange={(p, s) => handleOnchangePage({current: p, pageSize: s})}
                                     />
                                 </Row>
                             </div>

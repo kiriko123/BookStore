@@ -64,3 +64,6 @@ export const callDeleteBook = (bookId) =>{
 export const callUpdateBook = ({id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders}) => {
     return axios.put('api/v1/book', {id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders})
 }
+export const callFetchBookById = (id) => {
+    return axios.get(`api/v1/book/${id}`)
+}
