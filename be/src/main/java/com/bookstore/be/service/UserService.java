@@ -22,4 +22,5 @@ public interface UserService {
     User getUserByEmailAndRefreshToken(String email, String refreshToken);
     String bulkCreateUser(List<AdminBulkCreateUserDTO> adminBulkCreateUserDTOS);
     long countAllUser();
+    String getRefreshTokenByEmail(String email);
 }

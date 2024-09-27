@@ -189,4 +189,9 @@ public class UserServiceImpl implements UserService {
     public long countAllUser() {
         return userRepository.count();
     }
+
+    @Override
+    public String getRefreshTokenByEmail(String email) {
+        return userRepository.findByEmail(email).getRefreshToken();
+    }
 }

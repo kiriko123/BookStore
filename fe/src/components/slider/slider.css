@@ -4,28 +4,28 @@
     --bg: #f5f5f5;
 }
 
-html {
-    font-size: 62.5%;
-    scroll-behavior: smooth;
-}
+/*html {*/
+/*    font-size: 62.5%;*/
+/*    scroll-behavior: smooth;*/
+/*}*/
 
-@media (min-width: 1440px) {
-    html {
-        zoom: 1.5;
-    }
-}
+/*@media (min-width: 1440px) {*/
+/*    html {*/
+/*        zoom: 1.5;*/
+/*    }*/
+/*}*/
 
-@media (min-width: 2560px) {
-    html {
-        zoom: 1.7;
-    }
-}
+/*@media (min-width: 2560px) {*/
+/*    html {*/
+/*        zoom: 1.7;*/
+/*    }*/
+/*}*/
 
-@media (min-width: 3860px) {
-    html {
-        zoom: 2.5;
-    }
-}
+/*@media (min-width: 3860px) {*/
+/*    html {*/
+/*        zoom: 2.5;*/
+/*    }*/
+/*}*/
 
 ::-webkit-scrollbar {
     width: 1.3rem;

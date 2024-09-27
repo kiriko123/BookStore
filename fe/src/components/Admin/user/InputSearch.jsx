@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Input, Row, Select, theme } from 'antd';
-
 const { Option } = Select;
 
 const InputSearch = (props) => {
