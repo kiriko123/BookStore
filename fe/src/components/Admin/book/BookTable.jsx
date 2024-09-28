@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Row, Col, Popconfirm, Button, message, notification, Dropdown, Checkbox, Menu } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Table, Row, Col, Popconfirm, Button, message, notification, Dropdown, Checkbox, Menu} from 'antd';
 import {
     ExportOutlined,
     CloudUploadOutlined,
@@ -9,13 +9,8 @@ import {
     EditTwoTone
 } from '@ant-design/icons';
 import {callDeleteBook, callDeleteUser, callFetchBooks} from "../../../services/api.js";
-import { FaEye } from "react-icons/fa";
+import {FaEye} from "react-icons/fa";
 import InputSearch from './InputSearch';
-// import UserViewDetail from "./UserViewDetail.jsx";
-// import UserModalCreate from "./UserModalCreate.jsx";
-// import UserImport from "./data/UserImport.jsx";
-// import UserModalUpdate from "./UserModalUpdate.jsx";
-import { CgColorPicker } from "react-icons/cg";
 import BookViewDetail from "./BookViewDetail.jsx";
 import * as XLSX from "xlsx";
 import BookModalCreate from "./BookModelCreate.jsx";
@@ -40,7 +35,7 @@ const BookTable = () => {
         fetchBooks()
     }, [current, pageSize, filter, sortQuery]);
 
-    const fetchBooks = async () =>{
+    const fetchBooks = async () => {
         setIsLoading(true);
         let query = `page=${current}&size=${pageSize}`;
         if (filter) query += `&${filter}`;
@@ -83,7 +78,7 @@ const BookTable = () => {
     };
 
     const columnSelector = (
-        <Menu onClick={handleMenuClick} style={{ maxHeight: '200px', overflowY: 'scroll' }}>
+        <Menu onClick={handleMenuClick} style={{maxHeight: '200px', overflowY: 'scroll'}}>
             {Object.keys(selectedColumns).map((key) => (
                 <Menu.Item key={key}>
                     <Checkbox
@@ -169,11 +164,11 @@ const BookTable = () => {
         selectedColumns.action && {
             title: 'Action',
             render: (text, record) => (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 15 }}>
-                    <FaEye style={{ cursor: 'pointer' }} onClick={() => {
+                <div style={{display: 'flex', alignItems: 'center', gap: 15}}>
+                    <FaEye style={{cursor: 'pointer'}} onClick={() => {
                         setDataViewDetail(record);
                         setOpenViewDetail(true);
-                    }} />
+                    }}/>
                     <Popconfirm
                         placement="leftTop"
                         title="Xác nhận xóa book"
@@ -182,8 +177,8 @@ const BookTable = () => {
                         okText="Xác nhận"
                         cancelText="Hủy"
                     >
-                        <span style={{ cursor: 'pointer' }}>
-                            <DeleteTwoTone twoToneColor="#ff4d4f" />
+                        <span style={{cursor: 'pointer'}}>
+                            <DeleteTwoTone twoToneColor="#ff4d4f"/>
                         </span>
                     </Popconfirm>
                     <EditTwoTone
@@ -232,11 +227,10 @@ const BookTable = () => {
         }
     }
 
-
     const renderHeader = () => (
-        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 15 }}>
+        <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 15}}>
             <span>Table Books</span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 15 }}>
+            <div style={{display: 'flex', flexWrap: 'wrap', gap: 15}}>
                 <Dropdown
                     overlay={columnSelector}
                     trigger={['click']}
@@ -245,25 +239,30 @@ const BookTable = () => {
                 >
                     <Button icon={<EditTwoTone/>} type="primary">Select Columns</Button>
                 </Dropdown>
-                <Button icon={<ExportOutlined />} type="primary" onClick={() => handleExportData()}>Export</Button>
+                <Button icon={<ExportOutlined/>} type="primary" onClick={() => handleExportData()}>Export</Button>
 
-                <Button icon={<PlusOutlined />} type="primary" onClick={() => setOpenModalCreate(true)}>Thêm mới</Button>
+                <Button icon={<PlusOutlined/>} type="primary" onClick={() => setOpenModalCreate(true)}>Thêm mới</Button>
                 <Button type="ghost" onClick={() => {
                     setFilter("");
                     setSortQuery("");
                 }}>
-                    <ReloadOutlined />
+                    <ReloadOutlined/>
                 </Button>
             </div>
         </div>
     );
 
+    const handleSearch = (query) => {
+        setFilter(query);
+        setCurrent(1);
+    }
 
     return (
         <>
             <Row gutter={[20, 20]}>
                 <Col span={24}>
-                    <InputSearch handleSearch={setFilter} />
+                    <InputSearch handleSearch={handleSearch}
+                                 setFilter={setFilter}/>
                 </Col>
                 <Col span={24}>
                     <Table

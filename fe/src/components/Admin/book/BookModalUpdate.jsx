@@ -279,7 +279,7 @@ const BookModalUpdate = (props) => {
                                 <InputNumber
                                     min={0}
                                     style={{ width: '100%' }}
-                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    // formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     addonAfter="VND"
                                 />
                             </Form.Item>

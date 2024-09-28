@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Divider, Badge, Drawer, message, Button, Anchor, Avatar, Modal, Input} from 'antd';
+import {Divider, Badge, Drawer, message, Button, Anchor, Avatar, Modal, Input, Popover} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import {DownOutlined} from '@ant-design/icons';
 import {Dropdown, Space} from 'antd';
@@ -29,9 +29,11 @@ const Navbar = () => {
     const user = useSelector(state => state.account.user);
     const {t, i18n} = useTranslation();
     console.log(user);
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const carts = useSelector(state => state.order.carts);
+
     const [showManageAccount, setShowManageAccount] = useState(false);
 
     const handleLogout = async () => {
@@ -115,13 +117,41 @@ const Navbar = () => {
         setIsModalVisible(false);
     };
 
+    const contentPopover = () => {
+        return (
+            <div className='pop-cart-body'>
+                <div className='pop-cart-content'>
+                    {carts?.map((book, index) => {
+                        return (
+                            <div className='book' key={`book-${index}`}>
+                                <img alt=''
+                                     src={`${import.meta.env.VITE_BACKEND_URL}/storage/book/${book?.detail?.thumbnail}`}/>
+                                <div>{book?.detail?.name}</div>
+                                <div className='price'>
+                                    {new Intl.NumberFormat('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND'
+                                    }).format(book?.detail?.price ?? 0)}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+                <div className='pop-cart-footer'>
+                    <button>Xem giỏ hàng</button>
+                </div>
+            </div>
+        )
+    }
+
+
     return (
         <div className={`header ${isSticky ? "sticky" : ""}`}>
             <div className="container-fluid">
                 <div className="nav">
                     <div className="logo">
                         <i className="fas fa-bolt"></i>
-                        <a href="http://google.com">BookStore</a>
+                        <a href="#">BookStore</a>
                     </div>
 
                     <div className="search-bar">
@@ -137,34 +167,48 @@ const Navbar = () => {
                             <div>
                                 <span onClick={() => navigate('/')}> <FaHome/> <p>{t('home')}</p></span>
                             </div>
-                            <div>
-                                <span onClick={() => navigate('/2')}> <FaCartShopping/> <p>{t('cart')}</p></span>
-                            </div>
+
                             <div>
                                 <span onClick={() => navigate('/3')}> <MdContactSupport/> <p>{t('about')}</p></span>
                             </div>
-                            {/*<div>*/}
-                            {/*<Badge*/}
-                            {/*        count={0}*/}
-                            {/*        size={"small"}*/}
-                            {/*    >*/}
-                            {/*        <FiShoppingCart className='icon-cart'/>*/}
-                            {/*    </Badge>*/}
-                            {/*</div>*/}
+
                             <div>
                                 {!isAuthenticated || user === null ?
                                     <span
                                         onClick={() => navigate('/auth')}><RiLoginCircleFill/> <p>{t('login_register')}</p></span>
                                     :
-                                    <Dropdown menu={{items}} trigger={['click']}>
-                                        <Space style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-                                            <Avatar src={urlAvatar}/>
-                                            <span>
+
+
+                                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '25px'}}>
+                                        <div>
+                                            <Popover
+                                                className="popover-carts"
+                                                placement="topRight"
+                                                rootClassName="popover-carts"
+                                                title={"Sản phẩm mới thêm"}
+                                                content={contentPopover}
+                                                arrow={true}>
+                                                <Badge
+                                                    count={carts?.length ?? 0}
+                                                    size='default'
+                                                    showZero
+                                                >
+                                                    <FiShoppingCart size={'23px'} className='icon-cart' />
+                                                </Badge>
+                                            </Popover>
+
+                                        </div>
+                                        <Dropdown menu={{items}} trigger={['click']}>
+                                            <Space style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                                                <Avatar src={urlAvatar}/>
+                                                <span>
                                                 <span> {user?.name} </span>
                                                 <DownOutlined/>
                                             </span>
-                                        </Space>
-                                    </Dropdown>
+                                            </Space>
+                                        </Dropdown>
+                                    </div>
+
                                 }
                             </div>
                         </nav>
@@ -183,32 +227,43 @@ const Navbar = () => {
                                 <div className="mobileVisible-nav-div" onClick={() => navigate('/')}>
                                     <span><FaHome/> {t('home')}</span>
                                 </div>
-                                <div className="mobileVisible-nav-div" onClick={() => navigate('/2')}>
-                                    <span> <FaCartShopping/> {t('cart')}</span>
-                                </div>
+
                                 <div className="mobileVisible-nav-div" onClick={() => navigate('/3')}>
                                     <span> <MdContactSupport/> {t('about')}</span>
                                 </div>
-                                {/*<div>*/}
-                                {/*<Badge*/}
-                                {/*        count={0}*/}
-                                {/*        size={"small"}*/}
-                                {/*    >*/}
-                                {/*        <FiShoppingCart className='icon-cart'/>*/}
-                                {/*    </Badge>*/}
-                                {/*</div>*/}
+
                                 <div>
                                     {!isAuthenticated || user === null ? (
                                         <div className="mobileVisible-nav-div" onClick={() => navigate('/auth')}>
                                             <span><RiLoginCircleFill/>Login/Register</span>
                                         </div>
                                     ) : (
-                                        <div className="mobileVisible-nav-div" onClick={showModal}
-                                             style={{cursor: 'pointer'}}>
-                                            <Space style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-                                                <Avatar src={urlAvatar}/>
-                                                <span>{user?.name}</span>
-                                            </Space>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            padding: '10px',
+
+                                        }}>
+                                            <Dropdown menu={{items}} trigger={['click']}>
+                                                <Space style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                                                    <Avatar src={urlAvatar}/>
+                                                    <span>
+                                                <span> {user?.name} </span>
+                                                <DownOutlined/>
+                                            </span>
+                                                </Space>
+                                            </Dropdown>
+
+                                            <div>
+                                                <Badge
+                                                    count={carts?.length ?? 0}
+                                                    size={"small"}
+                                                    showZero
+                                                >
+                                                    <FiShoppingCart className='icon-cart' size={'23px'}/>
+                                                </Badge>
+                                            </div>
                                         </div>
                                     )}
 

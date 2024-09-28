@@ -16,7 +16,6 @@ import UserModalCreate from "./UserModalCreate.jsx";
 import UserImport from "./data/UserImport.jsx";
 import * as XLSX from "xlsx";
 import UserModalUpdate from "./UserModalUpdate.jsx";
-import { CgColorPicker } from "react-icons/cg";
 
 const UserTable = () => {
     const [listUser, setListUser] = useState([]);
@@ -34,8 +33,6 @@ const UserTable = () => {
 
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
-
-
 
     useEffect(() => {
         fetchUsers();
@@ -280,12 +277,19 @@ const UserTable = () => {
         </div>
     );
 
+    const handleSearch = (query) => {
+        setFilter(query);
+        setCurrent(1);
+    }
+
 
     return (
         <>
             <Row gutter={[20, 20]}>
                 <Col span={24}>
-                    <InputSearch handleSearch={setFilter} />
+                    <InputSearch handleSearch={handleSearch}
+                                 setFilter={setFilter}
+                    />
                 </Col>
                 <Col span={24}>
                     <Table

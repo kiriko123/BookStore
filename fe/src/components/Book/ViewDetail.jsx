@@ -6,6 +6,8 @@ import ModalGallery from './ModalGallery';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { BsCartPlus } from 'react-icons/bs';
 import BookLoader from './BookLoader';
+import {useDispatch} from "react-redux";
+import {doAddBookAction} from "../../redux/order/orderSlice.js";
 
 const ViewDetail = (props) => {
     const { dataBook } = props;
@@ -13,8 +15,11 @@ const ViewDetail = (props) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const refGallery = useRef(null);
-
     const images = dataBook?.items ?? [];
+
+    const dispatch = useDispatch();
+
+    const [currentQuantity, setCurrentQuantity] = useState(1);
 
     const handleOnClickImage = () => {
         //get current index onClick
@@ -24,9 +29,28 @@ const ViewDetail = (props) => {
         // refGallery?.current?.fullScreen()
     }
 
-    const onChange = (value) => {
-        console.log('changed', value);
-    };
+    const handleChangeButton = (type) =>{
+        if(type === "MINUS"){
+            if(currentQuantity - 1 <= 0) return;
+            setCurrentQuantity(currentQuantity - 1)
+        }
+        if(type === "PLUS"){
+            if(currentQuantity === +dataBook.quantity) return;
+            setCurrentQuantity(currentQuantity + 1);
+        }
+    }
+
+    const handleChangeInput = (value) =>{
+        if(!isNaN(value)){
+            if(+value > 0 && +value < +dataBook.quantity){
+                setCurrentQuantity(+value);
+            }
+        }
+    }
+
+    const handleAddToCart = (quantity, book) => {
+        dispatch(doAddBookAction({quantity, detail: book, _id: book.id}));
+    }
 
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>
@@ -81,13 +105,13 @@ const ViewDetail = (props) => {
                                     <div className='quantity'>
                                         <span className='left-side'>Số lượng</span>
                                         <span className='right-side'>
-                                            <button ><MinusOutlined /></button>
-                                            <input defaultValue={1} />
-                                            <button><PlusOutlined /></button>
+                                            <button onClick={() => handleChangeButton('MINUS')} ><MinusOutlined /></button>
+                                            <input onChange={(even) => handleChangeInput(even.target.value)} value={currentQuantity} />
+                                            <button onClick={() => handleChangeButton('PLUS')} ><PlusOutlined /></button>
                                         </span>
                                     </div>
                                     <div className='buy'>
-                                        <button className='cart'>
+                                        <button className='cart' onClick={() => handleAddToCart(currentQuantity, dataBook)}>
                                             <BsCartPlus className='icon-cart' />
                                             <span>Thêm vào giỏ hàng</span>
                                         </button>
