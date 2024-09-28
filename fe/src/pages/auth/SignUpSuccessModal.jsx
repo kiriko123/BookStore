@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { Result, Button, Modal } from 'antd';
-import { LoginOutlined } from '@ant-design/icons';
-import { AuthContext } from './index.jsx';
+import React, {useContext} from 'react';
+import {Result, Button, Modal} from 'antd';
+import {LoginOutlined} from '@ant-design/icons';
+import {AuthContext} from './index.jsx';
 
 function SignUpSuccessModal(props) {
-    const { setIsPanelRightActive } = useContext(AuthContext);
+    const {setIsPanelRightActive} = useContext(AuthContext);
 
     const handleRedirect = () => {
         props.handleClose();
@@ -12,24 +12,24 @@ function SignUpSuccessModal(props) {
     }
 
     return (
-      <Modal visible={true} footer={null} onCancel={props.handleClose}>
-        <Result
-          status="success"
-          title="Congratulations! Registration completed successfully!"
-          subTitle="Now you can sign in to our system."
-          extra={[
-            <Button
-              type="primary"
-              shape="round"
-              icon={<LoginOutlined />}
-              key="console"
-              onClick={handleRedirect}
-            >
-              Sign In now
-            </Button>,
-          ]}
-        />
-      </Modal>
+        <Modal visible={true} footer={null} onCancel={props.handleClose}>
+            <Result
+                status="success"
+                title="Congratulations! Registration completed successfully!"
+                subTitle="Now you can sign in to our system."
+                extra={[
+                    <Button
+                        type="primary"
+                        shape="round"
+                        icon={<LoginOutlined/>}
+                        key="console"
+                        onClick={handleRedirect}
+                    >
+                        Sign In now
+                    </Button>,
+                ]}
+            />
+        </Modal>
     );
 }
 

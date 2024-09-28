@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import ViewDetail from "../../components/Book/ViewDetail";
-import { callFetchBookById } from "../../services/api";
+import {callFetchBookById} from "../../services/api";
 
 const BookPage = () => {
     const [dataBook, setDataBook] = useState()
@@ -56,7 +56,7 @@ const BookPage = () => {
     }
     return (
         <>
-            <ViewDetail dataBook={dataBook} />
+            <ViewDetail dataBook={dataBook}/>
         </>
     )
 }

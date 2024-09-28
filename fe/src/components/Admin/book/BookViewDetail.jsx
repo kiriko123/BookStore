@@ -1,6 +1,5 @@
 import {Avatar, Badge, Descriptions, Divider, Drawer, Modal, Upload} from "antd";
 import moment from 'moment';
-import { AntDesignOutlined } from "@ant-design/icons";
 import {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 

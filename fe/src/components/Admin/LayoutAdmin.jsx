@@ -14,8 +14,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {callLogout} from "../../services/api.js";
 import {doLogoutAction} from "../../redux/account/accountSlice.js";
 import './layout.scss';
-import {FaUserCircle, FaUserEdit} from "react-icons/fa";
-import {RiAdminFill, RiLogoutBoxFill} from "react-icons/ri";
+import {FaUserEdit} from "react-icons/fa";
+import {RiLogoutBoxFill} from "react-icons/ri";
+import { BiCategoryAlt } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
 import ManageAccount from "../Account/ManageAccount.jsx";
 
@@ -31,6 +32,11 @@ const items = [
         label: <Link to='/admin/user'>Manage Users</Link>,
         key: 'user',
         icon: <UserOutlined/>,
+    },
+    {
+        label: <Link to='/admin/category'>Manage Categories</Link>,
+        key: 'category',
+        icon: <BiCategoryAlt />
     },
     {
         label: <Link to='/admin/book'>Manage Books</Link>,
@@ -67,6 +73,7 @@ const LayoutAdmin = () => {
         if (path.includes('/admin/user')) return 'user';
         if (path.includes('/admin/book')) return 'book';
         if (path.includes('/admin/order')) return 'order';
+        if (path.includes('/admin/category')) return 'category';
         return 'dashboard';
     };
 

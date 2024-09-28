@@ -7,7 +7,7 @@ const Footer = () => {
             <div className="footer">
                 <div className="logo">
                     <i className="fas fa-bolt"></i>
-                    <a href="http://google.com">BookStore</a>
+                    <a href="#">BookStore</a>
                 </div>
                 <ul className="socials">
                     <li><a href="https://www.facebook.com/"><i className="fab fa-facebook-f"></i></a></li>

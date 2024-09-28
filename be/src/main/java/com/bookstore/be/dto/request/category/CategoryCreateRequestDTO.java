@@ -8,5 +8,4 @@ import lombok.Getter;
 public class CategoryCreateRequestDTO {
     @NotBlank
     String name;
-    String imageUrl;
 }

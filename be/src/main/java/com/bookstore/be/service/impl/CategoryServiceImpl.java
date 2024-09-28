@@ -6,7 +6,6 @@ import com.bookstore.be.dto.response.ResultPaginationResponse;
 import com.bookstore.be.dto.response.category.CategoryResponse;
 import com.bookstore.be.exception.InvalidDataException;
 import com.bookstore.be.exception.ResourceNotFoundException;
-import com.bookstore.be.mapper.CategoryMapping;
 import com.bookstore.be.model.Category;
 import com.bookstore.be.repository.CategoryRepository;
 import com.bookstore.be.service.CategoryService;
@@ -22,30 +21,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
-    private final CategoryMapping categoryMapping;
 
     @Override
     public CategoryResponse create(CategoryCreateRequestDTO categoryCreateRequestDTO) {
-        if(categoryRepository.existsByName(categoryCreateRequestDTO.getName())) {
+        if (categoryRepository.existsByName(categoryCreateRequestDTO.getName())) {
             throw new InvalidDataException("Category name already exist");
         }
-        Category category = categoryMapping.fromCategoryCreateRequestDTOToCategory(categoryCreateRequestDTO);
-        category.setActive(true);
-        return categoryMapping.fromCategoryToCategoryResponse(categoryRepository.save(category));
+        Category category = Category.builder()
+                .name(categoryCreateRequestDTO.getName())
+                .active(true)
+                .build();
+        return CategoryResponse.fromCategory(categoryRepository.save(category));
     }
 
     @Override
     public CategoryResponse update(CategoryUpdateRequestDTO categoryUpdateRequestDTO) {
         Category category = getCategoryById(categoryUpdateRequestDTO.getId());
 
-        if(!category.getName().equals(categoryUpdateRequestDTO.getName())) {
-            if(categoryRepository.existsByName(categoryUpdateRequestDTO.getName())) {
+        if (!category.getName().equals(categoryUpdateRequestDTO.getName())) {
+            if (categoryRepository.existsByName(categoryUpdateRequestDTO.getName())) {
                 throw new InvalidDataException("Category name already exist");
             }
         }
-
-        categoryMapping.updateCategory(category, categoryUpdateRequestDTO);
-        return categoryMapping.fromCategoryToCategoryResponse(categoryRepository.save(category));
+        category.setName(categoryUpdateRequestDTO.getName());
+        category.setActive(categoryUpdateRequestDTO.isActive());
+        return CategoryResponse.fromCategory(categoryRepository.save(category));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .pageSize(pageable.getPageSize())
                 .build();
         List<CategoryResponse> categoryResponses = categoryPage.getContent()
-                .stream().map(categoryMapping::fromCategoryToCategoryResponse).toList();
+                .stream().map(CategoryResponse::fromCategory).toList();
 
         return ResultPaginationResponse.builder()
                 .meta(meta)
@@ -82,6 +82,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryResponse> getAll() {
-        return categoryRepository.findAll().stream().map(categoryMapping::fromCategoryToCategoryResponse).toList();
+        return categoryRepository.findAll().stream().map(CategoryResponse::fromCategory).toList();
     }
 }

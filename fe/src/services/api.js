@@ -55,6 +55,23 @@ export const callFetchBooks = (query) =>{
 export const callFetchCategory = () => {
     return axios.get(`/api/v1/category/all`);
 }
+
+export const callFetchAllCategory = (query) => {
+    return axios.get(`/api/v1/category?${query}`);
+}
+
+export const callCreateCategory = ({name}) => {
+    return axios.post('/api/v1/category', {name});
+}
+
+export const callDeleteCategory = (categoryId) => {
+    return axios.delete(`/api/v1/category/${categoryId}`);
+}
+
+export const callUpdateCategory = ({id, name, active}) => {
+    return axios.put(`/api/v1/category`, {id, name, active});
+}
+
 export const callCreateBook = ({name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders}) => {
     return axios.post('api/v1/book', {name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders})
 }

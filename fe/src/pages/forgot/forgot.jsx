@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { Button, Checkbox, Form, Input, message, notification } from 'antd';
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, {useState} from 'react';
+import {Button, Checkbox, Form, Input, message, notification} from 'antd';
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {callForgot, callLogin} from "../../services/api.js";
-import { doLoginAction } from "../../redux/account/accountSlice.js";
 import './forgot.scss';
 
 const ForgotPage = () => {
@@ -15,7 +14,7 @@ const ForgotPage = () => {
 
     const onFinish = async (values) => {
         console.log('Success:', values);
-        const { email } = values;
+        const {email} = values;
         setLoading(true);
         //
         const res = await callForgot({email});
@@ -53,8 +52,8 @@ const ForgotPage = () => {
                         name="email"
                         hasFeedback
                         label="Email address"
-                        labelCol={{ span: 24 }}
-                        wrapperCol={{ span: 24 }}
+                        labelCol={{span: 24}}
+                        wrapperCol={{span: 24}}
                         rules={[
                             {
                                 required: true,
@@ -66,7 +65,7 @@ const ForgotPage = () => {
                             },
                         ]}
                     >
-                        <Input placeholder="Email" size="large" />
+                        <Input placeholder="Email" size="large"/>
                     </Form.Item>
 
 

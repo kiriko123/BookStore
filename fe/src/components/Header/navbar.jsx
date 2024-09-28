@@ -3,15 +3,12 @@ import {Divider, Badge, Drawer, message, Button, Anchor, Avatar, Modal, Input, P
 import {useDispatch, useSelector} from 'react-redux';
 import {DownOutlined} from '@ant-design/icons';
 import {Dropdown, Space} from 'antd';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {callLogout} from "../../services/api.js";
 import {doLogoutAction} from "../../redux/account/accountSlice.js";
 import './navbar.css'
 import {FaHome} from "react-icons/fa";
-import {BiSolidCategoryAlt} from "react-icons/bi";
-import {FaCartShopping} from "react-icons/fa6";
 import {MdContactSupport} from "react-icons/md";
-import {FaUserCircle} from "react-icons/fa";
 import {RiLoginCircleFill} from "react-icons/ri";
 import {RiAdminFill} from "react-icons/ri";
 import {FaUserEdit} from "react-icons/fa";
@@ -179,7 +176,12 @@ const Navbar = () => {
                                     :
 
 
-                                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '25px'}}>
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        gap: '25px'
+                                    }}>
                                         <div>
                                             <Popover
                                                 className="popover-carts"
@@ -193,7 +195,7 @@ const Navbar = () => {
                                                     size='default'
                                                     showZero
                                                 >
-                                                    <FiShoppingCart size={'23px'} className='icon-cart' />
+                                                    <FiShoppingCart size={'23px'} className='icon-cart'/>
                                                 </Badge>
                                             </Popover>
 

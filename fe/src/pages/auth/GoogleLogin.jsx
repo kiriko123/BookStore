@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import { useGoogleLogin } from '@react-oauth/google';
+import {useGoogleLogin} from '@react-oauth/google';
 import {Button, message} from 'antd';
 import axios from 'axios';
-import { FcGoogle } from 'react-icons/fc';
+import {FcGoogle} from 'react-icons/fc';
 import {useNavigate} from "react-router-dom";
 import {doLoginAction} from "../../redux/account/accountSlice.js";
 import {useDispatch} from "react-redux"; // Icon Google từ react-icons
@@ -57,9 +57,9 @@ const GoogleLogin = () => {
             loading={loading}
             size="large"
             onClick={() => signIn()}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
         >
-            <FcGoogle style={{ marginRight: '8px' }} /> {/* Icon Google */}
+            <FcGoogle style={{marginRight: '8px'}}/> {/* Icon Google */}
             Sign in with Google
         </Button>
     );
