@@ -29,22 +29,22 @@ const items = [
         icon: <AppstoreOutlined/>
     },
     {
-        label: <Link to='/admin/user'>Manage Users</Link>,
+        label: <Link to='/admin/user'>Users</Link>,
         key: 'user',
         icon: <UserOutlined/>,
     },
     {
-        label: <Link to='/admin/category'>Manage Categories</Link>,
+        label: <Link to='/admin/category'>Categories</Link>,
         key: 'category',
         icon: <BiCategoryAlt />
     },
     {
-        label: <Link to='/admin/book'>Manage Books</Link>,
+        label: <Link to='/admin/book'>Books</Link>,
         key: 'book',
         icon: <ExceptionOutlined/>
     },
     {
-        label: <Link to='/admin/order'>Manage Orders</Link>,
+        label: <Link to='/admin/order'>Orders</Link>,
         key: 'order',
         icon: <DollarCircleOutlined/>
     },

@@ -18,6 +18,7 @@ import ForgotPage from "./pages/forgot/forgot.jsx";
 import ManageBookPage from "./pages/admin/book/index.jsx";
 import BookPage from "./pages/book/index.jsx";
 import ManageCategoriesPage from "./pages/admin/category/index.jsx";
+import ManageOrderPage from "./pages/admin/order/index.jsx";
 
 
 const Layout = () => {
@@ -102,6 +103,10 @@ export default function App() {
                 {
                     path: "category",
                     element: <ManageCategoriesPage/>,
+                },
+                {
+                    path: "order",
+                    element: <ManageOrderPage/>
                 }
             ]
         },

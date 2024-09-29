@@ -18,7 +18,7 @@ import * as XLSX from "xlsx";
 
 const CategoryTable = () => {
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(2);
+    const [pageSize, setPageSize] = useState(4);
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [filter, setFilter] = useState("");
@@ -56,7 +56,7 @@ const CategoryTable = () => {
         name: true,
         active: true,
         createdAt: true,
-        updatedAt: false,
+        updatedAt: true,
         createdBy: false,
         updatedBy: false,
         action: true,
@@ -99,7 +99,7 @@ const CategoryTable = () => {
             sorter: true,
         },
         selectedColumns.name && {
-            title: 'name',
+            title: 'Name',
             dataIndex: 'name',
             sorter: true,
         },
