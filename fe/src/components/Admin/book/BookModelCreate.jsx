@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Divider, Form, Input, InputNumber, message, Modal, notification, Row, Select, Upload } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import React, {useEffect, useState} from 'react';
+import {Col, Divider, Form, Input, InputNumber, message, Modal, notification, Row, Select, Upload} from 'antd';
+import {LoadingOutlined, PlusOutlined} from '@ant-design/icons'
 import {callCreateBook, callFetchCategory, callUploadFile} from "../../../services/api.js";
+
 const BookModalCreate = (props) => {
-    const { openModalCreate, setOpenModalCreate } = props;
+    const {openModalCreate, setOpenModalCreate} = props;
     const [isSubmit, setIsSubmit] = useState(false);
 
     const [listCategory, setListCategory] = useState([])
@@ -25,13 +26,15 @@ const BookModalCreate = (props) => {
         fetchCategory();
     }, [])
 
-    const fetchCategory = async () =>{
+    const fetchCategory = async () => {
         const res = await callFetchCategory();
-        if(res && res.data){
+        if (res && res.data) {
             console.log(res.data);
-            const d = res.data.map( item =>{
-                return {label: item.name, value: item.name};
-            })
+            const d = res.data
+                .filter(item => item.active)
+                .map(item => {
+                    return {label: item.name, value: item.name};
+                })
             setListCategory(d);
         }
     }
@@ -53,7 +56,7 @@ const BookModalCreate = (props) => {
             return;
         }
 
-        const { name, author, price, quantity, soldQuantity, categoryName } = values;
+        const {name, author, price, quantity, soldQuantity, categoryName} = values;
         const thumbnail = dataThumbnail[0].name;
         const sliders = dataSlider.map(item => item.name);
 
@@ -108,7 +111,7 @@ const BookModalCreate = (props) => {
         }
     };
 
-    const handleUploadFileThumbnail = async ({ file, onSuccess, onError }) => {
+    const handleUploadFileThumbnail = async ({file, onSuccess, onError}) => {
         const res = await callUploadFile(file, 'book');
         if (res && res.data) {
             console.log(res)
@@ -122,7 +125,7 @@ const BookModalCreate = (props) => {
         }
     };
 
-    const handleUploadFileSlider = async ({ file, onSuccess, onError }) => {
+    const handleUploadFileSlider = async ({file, onSuccess, onError}) => {
         const res = await callUploadFile(file, 'book');
         if (res && res.data) {
             //copy previous state => upload multiple images
@@ -159,7 +162,9 @@ const BookModalCreate = (props) => {
             <Modal
                 title="Thêm mới book"
                 open={openModalCreate}
-                onOk={() => { form.submit() }}
+                onOk={() => {
+                    form.submit()
+                }}
                 onCancel={() => {
                     form.resetFields();
                     setOpenModalCreate(false)
@@ -172,7 +177,7 @@ const BookModalCreate = (props) => {
                 //do not close when click fetchBook
                 maskClosable={false}
             >
-                <Divider />
+                <Divider/>
 
                 <Form
                     form={form}
@@ -183,34 +188,34 @@ const BookModalCreate = (props) => {
                     <Row gutter={15}>
                         <Col span={12}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Tên sách"
                                 name="name"
-                                rules={[{ required: true, message: 'Vui lòng nhập tên hiển thị!' }]}
+                                rules={[{required: true, message: 'Vui lòng nhập tên hiển thị!'}]}
                             >
-                                <Input />
+                                <Input/>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Tác giả"
                                 name="author"
-                                rules={[{ required: true, message: 'Vui lòng nhập tác giả!' }]}
+                                rules={[{required: true, message: 'Vui lòng nhập tác giả!'}]}
                             >
-                                <Input />
+                                <Input/>
                             </Form.Item>
                         </Col>
                         <Col span={6}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Giá tiền"
                                 name="price"
-                                rules={[{ required: true, message: 'Vui lòng nhập giá tiền!' }]}
+                                rules={[{required: true, message: 'Vui lòng nhập giá tiền!'}]}
                             >
                                 <InputNumber
                                     min={0}
-                                    style={{ width: '100%' }}
+                                    style={{width: '100%'}}
                                     // formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     addonAfter="VND"
                                 />
@@ -218,10 +223,10 @@ const BookModalCreate = (props) => {
                         </Col>
                         <Col span={6}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Thể loại"
                                 name="categoryName"
-                                rules={[{ required: true, message: 'Vui lòng chọn thể loại!' }]}
+                                rules={[{required: true, message: 'Vui lòng chọn thể loại!'}]}
                             >
                                 <Select
                                     defaultValue={null}
@@ -234,28 +239,28 @@ const BookModalCreate = (props) => {
                         </Col>
                         <Col span={6}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Số lượng"
                                 name="quantity"
-                                rules={[{ required: true, message: 'Vui lòng nhập số lượng!' }]}
+                                rules={[{required: true, message: 'Vui lòng nhập số lượng!'}]}
                             >
-                                <InputNumber min={1} style={{ width: '100%' }} />
+                                <InputNumber min={1} style={{width: '100%'}}/>
                             </Form.Item>
                         </Col>
                         <Col span={6}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Đã bán"
                                 name="soldQuantity"
-                                rules={[{ required: true, message: 'Vui lòng nhập số lượng đã bán!' }]}
+                                rules={[{required: true, message: 'Vui lòng nhập số lượng đã bán!'}]}
                                 initialValue={0}
                             >
-                                <InputNumber min={0} defaultValue={0} style={{ width: '100%' }} />
+                                <InputNumber min={0} defaultValue={0} style={{width: '100%'}}/>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Ảnh Thumbnail"
                                 name="thumbnail"
                             >
@@ -272,8 +277,8 @@ const BookModalCreate = (props) => {
                                     onPreview={handlePreview}
                                 >
                                     <div>
-                                        {loading ? <LoadingOutlined /> : <PlusOutlined />}
-                                        <div style={{ marginTop: 8 }}>Upload</div>
+                                        {loading ? <LoadingOutlined/> : <PlusOutlined/>}
+                                        <div style={{marginTop: 8}}>Upload</div>
                                     </div>
                                 </Upload>
                             </Form.Item>
@@ -281,7 +286,7 @@ const BookModalCreate = (props) => {
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                labelCol={{ span: 24 }}
+                                labelCol={{span: 24}}
                                 label="Ảnh Slider"
                                 name="slider"
                             >
@@ -297,8 +302,8 @@ const BookModalCreate = (props) => {
                                     onPreview={handlePreview}
                                 >
                                     <div>
-                                        {loadingSlider ? <LoadingOutlined /> : <PlusOutlined />}
-                                        <div style={{ marginTop: 8 }}>Upload</div>
+                                        {loadingSlider ? <LoadingOutlined/> : <PlusOutlined/>}
+                                        <div style={{marginTop: 8}}>Upload</div>
                                     </div>
                                 </Upload>
                             </Form.Item>
@@ -307,7 +312,7 @@ const BookModalCreate = (props) => {
                 </Form>
             </Modal>
             <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={() => setPreviewOpen(false)}>
-                <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                <img alt="example" style={{width: '100%'}} src={previewImage}/>
             </Modal>
         </>
     );

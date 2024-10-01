@@ -15,6 +15,7 @@ import CategoryViewDetail from "./CategoryViewDetail.jsx";
 import CategoryModalCreate from "./CategoryModalCreate.jsx";
 import CategoryModalUpdate from "./CategoryModalUpdate.jsx";
 import * as XLSX from "xlsx";
+import moment from 'moment';
 
 const CategoryTable = () => {
     const [current, setCurrent] = useState(1);
@@ -114,11 +115,13 @@ const CategoryTable = () => {
             title: 'CreatedAt',
             dataIndex: 'createdAt',
             sorter: true,
+            render: (createdAt) => (moment(createdAt).format('DD-MM-YYYY hh:mm:ss')),
         },
         selectedColumns.updatedAt && {
             title: 'UpdatedAt',
             dataIndex: 'updatedAt',
             sorter: true,
+            render: (updatedAt) => (moment(updatedAt).format('DD-MM-YYYY hh:mm:ss')),
         },
         selectedColumns.createdBy && {
             title: 'CreatedBy',

@@ -29,7 +29,7 @@ body {
 }
 
 .popover-carts .pop-cart-body .pop-cart-content .book .price {
-    color: #ee4d2d;
+    color: #072c57;
 }
 
 .popover-carts .pop-cart-body .pop-cart-footer {
@@ -39,15 +39,19 @@ body {
 }
 
 .popover-carts .pop-cart-body .pop-cart-footer button {
-    background-color: #ee4d2d;
+    background-color: #0f3460;
     color: #fff;
-    border: 1px solid #ee4d2d;
+    border: 1px solid #0b2646;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .03);
     cursor: pointer;
     border-radius: 3px;
     font-size: 16px;
     height: 40px;
     padding: 0 20px;
+}
+
+.popover-carts .pop-cart-body .pop-cart-footer button:hover {
+    background-color: #32537c;
 }
 
 

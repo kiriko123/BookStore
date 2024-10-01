@@ -1,0 +1,42 @@
+.checkout-modal {
+  padding: 10px;
+  .ant-modal-header {
+    //background-color: #f0f2f5;
+    border-bottom: none;
+  }
+
+  .ant-modal-title {
+    font-weight: bold;
+    color: #1890ff;
+  }
+
+  .modal-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+
+  .ant-divider {
+    margin: 16px 0;
+  }
+
+  .card-element {
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background-color: #fafafa;
+  }
+
+  .ant-btn-primary {
+    background-color: #52c41a;
+    border-color: #52c41a;
+  }
+
+  .ant-btn:hover,
+  .ant-btn:focus {
+    background-color: #389e0d;
+    border-color: #389e0d;
+  }
+}
+
+

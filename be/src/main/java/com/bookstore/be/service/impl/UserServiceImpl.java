@@ -5,7 +5,6 @@ import com.bookstore.be.dto.request.user.AdminCreateUserDTO;
 import com.bookstore.be.dto.request.user.AdminUpdateUserDTO;
 import com.bookstore.be.dto.response.ResultPaginationResponse;
 import com.bookstore.be.dto.response.user.UserResponse;
-import com.bookstore.be.mapper.UserMapping;
 import com.bookstore.be.service.UserService;
 import com.bookstore.be.exception.InvalidDataException;
 import com.bookstore.be.exception.ResourceNotFoundException;
@@ -30,7 +29,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final UserMapping userMapping;
 
     @Override
     public UserResponse save(AdminCreateUserDTO adminCreateUserDTO) {
@@ -80,10 +78,10 @@ public class UserServiceImpl implements UserService {
         String email = SecurityUtil.getCurrentUserLogin().orElse("");
 
         if (user.getEmail().equals(email)) {
-            throw new RuntimeException("Không thể xóa user hiện tại của bạn");
+            throw new RuntimeException(" Không thể xóa user hiện tại của bạn");
         }
         if (user.getRole().getName().equals("ROLE_ADMIN")) {
-            throw new RuntimeException("Không thể xóa ADMIN");
+            throw new RuntimeException(" Không thể xóa ADMIN");
         }
 
         if(user.isEnabled()){
@@ -164,7 +162,7 @@ public class UserServiceImpl implements UserService {
                 error++;
                 continue;
             }
-            User user = userRepository.save(
+            userRepository.save(
                     User.builder()
                             .name(adminBulkCreateUserDTO.getName())
                             .password(passwordEncoder.encode(adminBulkCreateUserDTO.getPassword()))

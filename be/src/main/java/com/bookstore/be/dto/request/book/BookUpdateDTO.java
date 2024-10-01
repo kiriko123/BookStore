@@ -32,5 +32,7 @@ public class BookUpdateDTO {
     @NotBlank
     String categoryName;
 
+    boolean active;
+
     List<String> sliders;
 }

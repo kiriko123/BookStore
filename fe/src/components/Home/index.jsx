@@ -17,7 +17,7 @@ const Home = () => {
     const [total, setTotal] = useState(0);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [filter, setFilter] = useState("");
+    const [filter, setFilter] = useState("filter=category.active:'true' and active:'true' and quantity > 0");
     const [sortQuery, setSortQuery] = useState("sort=soldQuantity,desc");
 
     const [form] = Form.useForm();
@@ -26,14 +26,18 @@ const Home = () => {
         const initCategory = async () => {
             const res = await callFetchCategory();
             if (res && res.data) {
-                const d = res.data.map(item => {
-                    return {label: item.name, value: item.name}
-                })
+                console.log(res.data);
+                const d = res.data
+                    .filter(item => item.active)  // Only include items where active is true
+                    .map(item => {
+                        return { label: item.name, value: item.name };
+                    });
                 setListCategory(d);
             }
         }
         initCategory();
     }, []);
+
 
     useEffect(() => {
         fetchBook();
@@ -66,67 +70,38 @@ const Home = () => {
             setPageSize(pagination.pageSize)
             setCurrent(1);
         }
-
     }
 
-    const handleChangeFilter = (changedValues, values) => {
-        // chỉ kích hoạt nếu có thay đổi trong category
-        if (changedValues.category) {
-            const cate = values.category;
-
-            if (cate && cate.length > 0) {
-                if (cate.length === 1) {
-                    // Nếu chỉ có 1 giá trị, không cần 'in'
-                    setFilter(`filter=category.name%20%3A%27${cate[0]}%27`);  // '%20%3A' mã hóa cho ':'
-                } else {
-                    // Nếu có nhiều hơn 1 giá trị, sử dụng 'in' và mã hóa các ký tự
-                    const f = `category.name%20in%20%5B${cate.map(c => `%27${c}%27`).join('%2C%20')}%5D`;  // %5B, %5D là dấu ngoặc vuông, %2C là dấu phẩy
-                    setFilter(`filter=${f}`);
-                }
+    const updateFilter = (values) => {
+        let f = "filter=category.active:'true' and active:'true' and quantity > 0"; // Giá trị mặc định
+        // Kiểm tra điều kiện category
+        if (values?.category?.length) {
+            let cateFilter;
+            if (values.category.length === 1) {
+                cateFilter = `category.name%20%3A%27${values.category[0]}%27`;  // 1 giá trị
             } else {
-                // reset dữ liệu -> fetch tất cả
-                setFilter('');
+                cateFilter = `category.name%20in%20%5B${values.category.map(c => `%27${c}%27`).join('%2C%20')}%5D`;  // Nhiều giá trị
             }
+            f += ` and (${cateFilter})`;
+        }
+
+        // Kiểm tra điều kiện price range
+        if (values?.range?.from >= 0 && values?.range?.to >= 0) {
+            f += ` and price>:${values.range.from} and price<:${values.range.to}`;
+        }
+
+        // Set filter cuối cùng
+        setFilter(f);
+    };
+
+    const handleChangeFilter = (changedValues, values) => {
+        if (changedValues.category) {
+            updateFilter(values); // Cập nhật filter khi có thay đổi category
         }
     };
 
-
     const onFinish = (values) => {
-        let f = '';
-
-        // kiểm tra điều kiện price range
-        if (values?.range?.from >= 0 && values?.range?.to >= 0) {
-            // tạo chuỗi filter cho price
-            f = `filter=price>:${values?.range?.from} and price<:${values?.range?.to}`;
-        }
-
-        // nếu có category thì thêm vào filter
-        if (values?.category?.length) {
-            let cateFilter;
-            if (values?.category.length === 1) {
-                // Nếu chỉ có 1 giá trị category, không cần 'in'
-                cateFilter = `category.name%20%3A%27${values.category[0]}%27`;  // %27 là dấu nháy đơn
-            } else {
-                // Nếu có nhiều giá trị, sử dụng 'in'
-                cateFilter = `category.name%20in%20%5B${values.category.map(c => `%27${c}%27`).join('%2C%20')}%5D`;  // %5B, %5D là dấu ngoặc vuông
-            }
-
-            // nếu f có chứa giá trị price, nối thêm filter cho category
-            if (f) {
-                f += `%20and%20(${cateFilter})`;  // %20 là khoảng trắng, nối các điều kiện với 'and'
-            } else {
-                // nếu không có giá trị price, chỉ thêm category vào filter
-                f = `filter=(${cateFilter})`;
-            }
-        }
-
-        // nếu không có filter nào hợp lệ, reset filter
-        if (!f) {
-            setFilter('');
-        } else {
-            // set filter cuối cùng
-            setFilter(f);
-        }
+        updateFilter(values); // Cập nhật filter khi form submit
     };
 
 
@@ -210,7 +185,7 @@ const Home = () => {
                                 </span>
                                 <ReloadOutlined title="Reset" onClick={() => {
                                     form.resetFields();
-                                    setFilter('');
+                                    setFilter("filter=category.active:'true' and active:'true' and quantity > 0");
                                 }}
                                 />
                             </div>

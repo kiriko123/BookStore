@@ -19,6 +19,8 @@ import ManageBookPage from "./pages/admin/book/index.jsx";
 import BookPage from "./pages/book/index.jsx";
 import ManageCategoriesPage from "./pages/admin/category/index.jsx";
 import ManageOrderPage from "./pages/admin/order/index.jsx";
+import OrderPage from "./pages/order/index.jsx";
+import HistoryPage from "./pages/history/index.jsx";
 
 
 const Layout = () => {
@@ -69,6 +71,14 @@ export default function App() {
                 {
                     path: "book/:slug",
                     element: <BookPage/>
+                },
+                {
+                    path: "/order",
+                    element: <OrderPage/>
+                },
+                {
+                    path: "/history",
+                    element: <HistoryPage/>
                 }
             ]
 

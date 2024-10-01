@@ -44,3 +44,6 @@ khang:
     refresh-token-validity-in-seconds: 604800  # 7 days = 604800 seconds
   upload-file:
     base-uri: file:///D:/Project/BookStore/upload/
+stripe:
+  api:
+    key: sk_test_51Q4i0kCsOTWfrG9wJicEj5K728Kfg51NJRNkHJ6w1OXpkiZttpWvPyzfu8AHGQE2Okk5wYkZjm6Ml8sMIe5w1q9v00UgyWcGqF

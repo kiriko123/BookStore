@@ -16,6 +16,7 @@ import {RiLogoutBoxFill} from "react-icons/ri";
 import {FiShoppingCart} from "react-icons/fi";
 import {useTranslation} from "react-i18next";
 import ManageAccount from "../Account/ManageAccount.jsx";
+import { MdHistoryEdu } from "react-icons/md";
 
 
 const Navbar = () => {
@@ -54,6 +55,17 @@ const Navbar = () => {
                 </div>
             </label>,
             key: 'account',
+        },
+        {
+            label: <label style={{cursor: 'pointer'}}>
+                <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}
+                     onClick={() => navigate('/history')}
+                >
+                    <MdHistoryEdu />
+                    <span>History</span>
+                </div>
+            </label>,
+            key: 'history',
         },
         ...(role === 'ROLE_ADMIN' ? [{
             label: <label
@@ -135,7 +147,7 @@ const Navbar = () => {
                     })}
                 </div>
                 <div className='pop-cart-footer'>
-                    <button>Xem giỏ hàng</button>
+                    <button onClick={() => navigate('/order')}>Xem giỏ hàng</button>
                 </div>
             </div>
         )
@@ -194,6 +206,7 @@ const Navbar = () => {
                                                     count={carts?.length ?? 0}
                                                     size='default'
                                                     showZero
+                                                    color={"#214167"}
                                                 >
                                                     <FiShoppingCart size={'23px'} className='icon-cart'/>
                                                 </Badge>
@@ -263,7 +276,7 @@ const Navbar = () => {
                                                     size={"small"}
                                                     showZero
                                                 >
-                                                    <FiShoppingCart className='icon-cart' size={'23px'}/>
+                                                    <FiShoppingCart onClick={() => navigate('/order')} className='icon-cart' size={'23px'}/>
                                                 </Badge>
                                             </div>
                                         </div>

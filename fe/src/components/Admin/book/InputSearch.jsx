@@ -50,6 +50,9 @@ const InputSearch = (props) => {
         if (values.category) {
             queryParts.push(`category.name~%27${values.category}%27`);
         }
+        if (values.active) {
+            queryParts.push(`active~%27${values.active}%27`);
+        }
         if (queryParts.length > 0) {
             const query = `filter=${queryParts.join('%20and%20')}`;
             console.log("Search query:", query);
@@ -61,7 +64,7 @@ const InputSearch = (props) => {
         <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish}>
             <Row gutter={24}>
 
-                <Col span={8}>
+                <Col span={7}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`name`}
@@ -71,7 +74,7 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={8}>
+                <Col span={7}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`author`}
@@ -81,7 +84,20 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={8}>
+                <Col span={5}>
+                    <Form.Item
+                        labelCol={{ span: 24 }}
+                        name={`active`}
+                        label={`Active`}
+                    >
+                        <Select placeholder="Select acive">
+                            <Option value="true">Active</Option>
+                            <Option value="false">Inactive</Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
+
+                <Col span={5}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`category`}
@@ -93,14 +109,6 @@ const InputSearch = (props) => {
                             allowClear
                             options={listCategory}
                         />
-                        {/*<Select placeholder="Select category">*/}
-                        {/*    /!* Duyệt qua listCategory và hiển thị từng option *!/*/}
-                        {/*    {listCategory && listCategory.map((category) => (*/}
-                        {/*        <Option key={category.id} value={category.id}>*/}
-                        {/*            {category.name}*/}
-                        {/*        </Option>*/}
-                        {/*    ))}*/}
-                        {/*</Select>*/}
                     </Form.Item>
                 </Col>
             </Row>

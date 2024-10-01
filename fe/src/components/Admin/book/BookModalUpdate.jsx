@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Divider, Form, Input, InputNumber, message, Modal, notification, Row, Select, Upload } from 'antd';
+import {Col, Divider, Form, Input, InputNumber, message, Modal, notification, Radio, Row, Select, Upload} from 'antd';
 import {callFetchCategory, callUpdateBook, callUploadFile} from '../../../services/api';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { v4 as uuidv4 } from 'uuid';
@@ -65,6 +65,7 @@ const BookModalUpdate = (props) => {
                 name: dataUpdate.name,
                 author: dataUpdate.author,
                 price: dataUpdate.price,
+                active: dataUpdate.active,
                 category: dataUpdate.category.name,
                 quantity: dataUpdate.quantity,
                 soldQuantity: dataUpdate.soldQuantity,
@@ -99,14 +100,14 @@ const BookModalUpdate = (props) => {
             return;
         }
 
-        const { id, name, author, price, soldQuantity, quantity, category } = values;
+        const { id, name, author, price, soldQuantity, quantity, category, active } = values;
         console.log(">>>>Check category", category);
         const categoryName = category;
         const thumbnail = dataThumbnail[0].name;
         const sliders = dataSlider.map(item => item.name);
 
         setIsSubmit(true)
-        const res = await callUpdateBook({id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders});
+        const res = await callUpdateBook({id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders, active});
         if (res && res.data) {
             message.success('Cập nhật book thành công');
             form.resetFields();
@@ -259,7 +260,7 @@ const BookModalUpdate = (props) => {
                                 <Input />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={6}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Tác giả"
@@ -269,6 +270,21 @@ const BookModalUpdate = (props) => {
                                 <Input />
                             </Form.Item>
                         </Col>
+
+                        <Col span={6}>
+                            <Form.Item
+                                labelCol={{ span: 24 }}
+                                label="Active"
+                                name="active"
+                                rules={[{ required: true, message: 'Vui lòng nhập tác giả!' }]}
+                            >
+                                <Radio.Group>
+                                    <Radio value={true}>Act</Radio>
+                                    <Radio value={false}>Ina</Radio>
+                                </Radio.Group>
+                            </Form.Item>
+                        </Col>
+
                         <Col span={6}>
                             <Form.Item
                                 labelCol={{ span: 24 }}

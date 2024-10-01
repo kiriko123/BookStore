@@ -73,13 +73,16 @@ public class BookServiceImpl implements BookService {
         currentBook.setThumbnail(bookUpdateDTO.getThumbnail());
         currentBook.setCategory(category);
         currentBook.setSliders(bookUpdateDTO.getSliders());
+        currentBook.setActive(bookUpdateDTO.isActive());
 
         return BookResponse.from(bookRepository.save(currentBook));
     }
 
     @Override
     public void deleteBook(long id) {
-        bookRepository.deleteById(id);
+        Book currentBook = getBookById(id);
+        currentBook.setActive(false);
+        bookRepository.save(currentBook);
     }
 
     @Override

@@ -78,9 +78,23 @@ export const callCreateBook = ({name, author, price, quantity, soldQuantity, thu
 export const callDeleteBook = (bookId) =>{
     return axios.delete(`/api/v1/book/${bookId}`);
 }
-export const callUpdateBook = ({id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders}) => {
-    return axios.put('api/v1/book', {id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders})
+export const callUpdateBook = ({id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders, active}) => {
+    return axios.put('api/v1/book', {id, name, author, price, quantity, soldQuantity, thumbnail, categoryName, sliders, active})
 }
 export const callFetchBookById = (id) => {
     return axios.get(`api/v1/book/${id}`)
 }
+export const callPlaceOrder = (data) => {
+    return axios.post('/api/v1/order', {
+        ...data
+    })
+}
+
+export const callOrderHistory = (id) => {
+    return axios.get(`/api/v1/order/${id}`);
+}
+
+export const callCheckOut = (data) => {
+    return axios.post('/api/v1/payment/create-payment-intent', data);
+}
+
