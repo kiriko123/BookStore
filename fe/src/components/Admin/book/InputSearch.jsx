@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Row, Select, theme } from 'antd';
-import {callFetchCategory} from "../../../services/api.js";
+import { callFetchCategory } from "../../../services/api.js";
 
 const { Option } = Select;
 
@@ -13,7 +13,7 @@ const InputSearch = (props) => {
     const formStyle = {
         maxWidth: '100%',
         padding: '20px',
-        background: `#fff`,
+        background: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         color: '#222',
         fontWeight: 'bold',
@@ -25,18 +25,17 @@ const InputSearch = (props) => {
         fetchCategorys();
     }, []);
 
-    const fetchCategorys = async () =>{
+    const fetchCategorys = async () => {
         const res = await callFetchCategory();
 
-        if(res && res.data){
+        if (res && res.data) {
             console.log(res.data);
-            const d = res.data.map( item =>{
-                return {label: item.name, value: item.name};
-            })
+            const d = res.data.map(item => {
+                return { label: item.name, value: item.name };
+            });
             setListCategory(d);
         }
-
-    }
+    };
 
     const onFinish = (values) => {
         let queryParts = [];
@@ -62,9 +61,10 @@ const InputSearch = (props) => {
 
     return (
         <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish}>
-            <Row gutter={24}>
+            <Row gutter={[16, 16]}> {/* Adjusted gutter for better spacing */}
 
-                <Col span={7}>
+                {/* Responsive for Name */}
+                <Col xs={24} sm={12} md={8} lg={6}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`name`}
@@ -74,7 +74,8 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={7}>
+                {/* Responsive for Author */}
+                <Col xs={24} sm={12} md={8} lg={6}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`author`}
@@ -84,20 +85,22 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={5}>
+                {/* Responsive for Active */}
+                <Col xs={24} sm={12} md={8} lg={6}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`active`}
                         label={`Active`}
                     >
-                        <Select placeholder="Select acive">
+                        <Select placeholder="Select active">
                             <Option value="true">Active</Option>
                             <Option value="false">Inactive</Option>
                         </Select>
                     </Form.Item>
                 </Col>
 
-                <Col span={5}>
+                {/* Responsive for Category */}
+                <Col xs={24} sm={12} md={8} lg={6}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`category`}

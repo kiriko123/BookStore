@@ -173,8 +173,8 @@ const Payment = (props) => {
                         )}
                     </div>
                     <Divider style={{ margin: "5px 0" }} />
-                    <button onClick={() => form.submit()}
-                            disabled={isSubmit}
+                    <button  onClick={() => form.submit()}
+                            disabled={isSubmit || carts.length===0}
                     >
                         {isSubmit && <span><LoadingOutlined /> &nbsp;</span>}
                         Đặt Hàng ({carts?.length ?? 0})

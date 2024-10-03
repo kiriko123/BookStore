@@ -210,6 +210,8 @@ const BookModalUpdate = (props) => {
         });
     };
 
+
+
     return (
         <>
             <Modal
@@ -225,7 +227,7 @@ const BookModalUpdate = (props) => {
                 okText={"Cập nhật"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}
-                width={"50vw"}
+                width={"80vw"}
                 //do not close when click outside
                 maskClosable={false}
                 centered
@@ -250,7 +252,7 @@ const BookModalUpdate = (props) => {
                             </Form.Item>
                         </Col>
 
-                        <Col span={12}>
+                        <Col xs={24} sm={8}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Tên sách"
@@ -260,7 +262,7 @@ const BookModalUpdate = (props) => {
                                 <Input />
                             </Form.Item>
                         </Col>
-                        <Col span={6}>
+                        <Col xs={24} sm={8}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Tác giả"
@@ -271,7 +273,7 @@ const BookModalUpdate = (props) => {
                             </Form.Item>
                         </Col>
 
-                        <Col span={6}>
+                        <Col xs={24} sm={8}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Active"
@@ -285,7 +287,7 @@ const BookModalUpdate = (props) => {
                             </Form.Item>
                         </Col>
 
-                        <Col span={6}>
+                        <Col xs={24} sm={6}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Giá tiền"
@@ -300,7 +302,7 @@ const BookModalUpdate = (props) => {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col span={6}>
+                        <Col xs={24} sm={6}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Thể loại"
@@ -316,7 +318,7 @@ const BookModalUpdate = (props) => {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col span={6}>
+                        <Col xs={24} sm={6}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Số lượng"
@@ -326,7 +328,7 @@ const BookModalUpdate = (props) => {
                                 <InputNumber min={1} style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>
-                        <Col span={6}>
+                        <Col xs={24} sm={6}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Đã bán"
@@ -336,7 +338,7 @@ const BookModalUpdate = (props) => {
                                 <InputNumber min={0} disabled style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col xs={24} sm={12}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Ảnh Thumbnail"
@@ -363,7 +365,7 @@ const BookModalUpdate = (props) => {
                             </Form.Item>
 
                         </Col>
-                        <Col span={12}>
+                        <Col xs={24} sm={12}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 label="Ảnh Slider"

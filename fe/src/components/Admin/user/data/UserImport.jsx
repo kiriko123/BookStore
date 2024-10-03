@@ -109,6 +109,7 @@ const UserImport = (props) => {
                 </Dragger>
                 <div style={{ paddingTop: 20 }}>
                     <Table
+                        scroll={{ x: 800 }} // Enables horizontal scrolling
                         dataSource={dataExcel}
                         title={() => <span>Dữ liệu upload:</span>}
                         columns={[

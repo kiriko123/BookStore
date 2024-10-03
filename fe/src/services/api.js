@@ -93,8 +93,15 @@ export const callPlaceOrder = (data) => {
 export const callOrderHistory = (id) => {
     return axios.get(`/api/v1/order/${id}`);
 }
-
+export const callGetAllOrder = (query) => {
+    return axios.get(`/api/v1/order?${query}`);
+}
 export const callCheckOut = (data) => {
     return axios.post('/api/v1/payment/create-payment-intent', data);
 }
-
+export const callCountAllUserOrderAndBook = () => {
+    return axios.get('/api/v1/statistics/count-all-user-order-and-book');
+}
+export const callRevenueStatistics = () => {
+    return axios.get('/api/v1/statistics/revenueStatistics');
+}

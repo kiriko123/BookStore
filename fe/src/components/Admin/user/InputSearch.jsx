@@ -55,8 +55,7 @@ const InputSearch = (props) => {
     return (
         <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish}>
             <Row gutter={24}>
-
-                <Col span={4}>
+                <Col xs={12} sm={12} md={8} lg={4}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`firstName`}
@@ -66,7 +65,7 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={4}>
+                <Col xs={12} sm={12} md={8} lg={4}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`fullName`}
@@ -76,7 +75,7 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={5}>
+                <Col xs={12} sm={12} md={12} lg={5}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`email`}
@@ -85,7 +84,8 @@ const InputSearch = (props) => {
                         <Input placeholder="Please input email!" />
                     </Form.Item>
                 </Col>
-                <Col span={5}>
+
+                <Col xs={12} sm={12} md={12} lg={5}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`phoneNumber`}
@@ -95,7 +95,7 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={6}>
+                <Col xs={12} sm={12} md={12} lg={6}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`address`}
@@ -105,7 +105,7 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={4}>
+                <Col xs={12} sm={12} md={8} lg={4}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`enabled`}
@@ -118,7 +118,7 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={4}>
+                <Col xs={12} sm={12} md={8} lg={4}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`role`}
@@ -131,7 +131,7 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col span={4}>
+                <Col xs={12} sm={12} md={8} lg={4}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`gender`}
@@ -144,8 +144,8 @@ const InputSearch = (props) => {
                         </Select>
                     </Form.Item>
                 </Col>
-
             </Row>
+
             <Row>
                 <Col span={24} style={{ textAlign: 'right' }}>
                     <Button type="primary" htmlType="submit">

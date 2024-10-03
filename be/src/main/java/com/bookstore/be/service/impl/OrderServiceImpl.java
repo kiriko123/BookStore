@@ -1,6 +1,8 @@
 package com.bookstore.be.service.impl;
 
 import com.bookstore.be.dto.request.order.OrderCreateDTO;
+import com.bookstore.be.dto.response.ResultPaginationResponse;
+import com.bookstore.be.dto.response.book.BookResponse;
 import com.bookstore.be.dto.response.order.OrderResponse;
 import com.bookstore.be.exception.ResourceNotFoundException;
 import com.bookstore.be.model.Order;
@@ -11,6 +13,9 @@ import com.bookstore.be.repository.OrderRepository;
 import com.bookstore.be.repository.UserRepository;
 import com.bookstore.be.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
         orderCreateDTO.getOrderDetails().forEach(detail -> {
             var book = bookMap.get(detail.getBookId());
             book.setQuantity(book.getQuantity() - detail.getQuantity());
+            book.setSoldQuantity(book.getSoldQuantity() + detail.getQuantity());
             bookRepository.save(book); // Save the updated book quantity
         });
 
@@ -95,8 +101,62 @@ public class OrderServiceImpl implements OrderService {
 
                     return OrderResponse.fromOrder(order, orderDetailResponses);
                 })
-                .collect(java.util.stream.Collectors.toList());
+                .toList();
 
     }
+
+    @Override
+    public ResultPaginationResponse findAll(Specification<Order> spec, Pageable pageable) {
+        // Tìm tất cả các đơn hàng dựa trên Specification và Pageable
+        Page<Order> orders = orderRepository.findAll(spec, pageable);
+
+        // Tạo metadata cho phân trang
+        ResultPaginationResponse.Meta meta = ResultPaginationResponse.Meta.builder()
+                .total(orders.getTotalElements())
+                .pages(orders.getTotalPages())
+                .page(pageable.getPageNumber() + 1)  // Trang hiện tại
+                .pageSize(pageable.getPageSize())    // Số phần tử trên mỗi trang
+                .build();
+
+        // Chuyển đổi từng Order sang OrderResponse kèm theo OrderDetailResponse
+        List<OrderResponse> orderResponses = orders.getContent().stream()
+                .map(order -> {
+                    // Lấy các OrderDetail của Order hiện tại
+                    List<OrderDetail> orderDetails = orderDetailRepository.findAllByOrderId(order.getId());
+
+                    // Chuyển đổi từng OrderDetail sang OrderDetailResponse
+                    List<OrderResponse.OrderDetailResponse> orderDetailResponses = orderDetails.stream()
+                            .map(OrderResponse.OrderDetailResponse::fromOrderDetail)
+                            .toList();
+
+                    // Tạo OrderResponse từ Order và danh sách OrderDetailResponse
+                    return OrderResponse.fromOrder(order, orderDetailResponses);
+                })
+                .toList();
+
+        // Trả về kết quả phân trang kèm theo danh sách các OrderResponse
+        return ResultPaginationResponse.builder()
+                .meta(meta)
+                .result(orderResponses)  // Kết quả các đơn hàng
+                .build();
+    }
+
+    @Override
+    public List<OrderResponse> getAll() {
+        List<Order> orders =  orderRepository.findAll();
+
+        return orders.stream()
+                .map(order -> {
+                    List<OrderDetail> orderDetails = orderDetailRepository.findAllByOrderId(order.getId());
+
+                    List<OrderResponse.OrderDetailResponse> orderDetailResponses = orderDetails.stream()
+                            .map(OrderResponse.OrderDetailResponse::fromOrderDetail)
+                            .toList();
+
+                    return OrderResponse.fromOrder(order, orderDetailResponses);
+                })
+                .toList();
+    }
+
 }
 

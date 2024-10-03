@@ -246,6 +246,7 @@ const CategoryTable = () => {
                         dataSource={listCategory}
                         onChange={onChange}
                         rowKey="id"
+                        scroll={{ x: 800 }} // Enables horizontal scrolling
                         pagination={{
                             current,
                             pageSize,

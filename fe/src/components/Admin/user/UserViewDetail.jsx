@@ -1,7 +1,9 @@
-import { Avatar, Badge, Descriptions, Drawer, Modal } from "antd";
+import { Avatar, Badge, Descriptions, Drawer, Modal, Grid } from "antd";
 import moment from 'moment';
 import { AntDesignOutlined } from "@ant-design/icons";
 import { useState } from 'react';
+
+const { useBreakpoint } = Grid;
 
 const UserViewDetail = (props) => {
     const { openViewDetail, setOpenViewDetail, dataViewDetail, setDataViewDetail } = props;
@@ -9,41 +11,49 @@ const UserViewDetail = (props) => {
     // State để kiểm soát modal hiển thị ảnh lớn
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Ant Design's responsive grid system
+    const screens = useBreakpoint();
+
+    // Đóng Drawer và xóa dữ liệu
     const onClose = () => {
         setOpenViewDetail(false);
         setDataViewDetail(null);
     }
 
+    // Xử lý sự kiện khi người dùng click vào avatar
     const handleAvatarClick = () => {
         setIsModalOpen(true);
     };
 
+    // Đóng modal hiển thị ảnh
     const handleModalClose = () => {
         setIsModalOpen(false);
     };
 
+    // Đường dẫn đến avatar
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/storage/avatar/${dataViewDetail?.imageUrl}`;
 
     return (
         <>
             <Drawer
                 title="User Detail"
-                width={"60vw"}
+                width={screens.xs ? "100%" : screens.sm ? "80%" : screens.md ? "60%" : "40%"} // Responsive width
                 onClose={onClose}
                 open={openViewDetail}
+                bodyStyle={{ paddingBottom: 80 }}
             >
                 <Descriptions
                     bordered
-                    column={2}
+                    column={screens.xs ? 1 : screens.sm ? 2 : 3}  // Responsive columns
                 >
-                    <Descriptions.Item label="Avatar" span={2}>
+                    <Descriptions.Item label="Avatar" span={3}>
                         <Avatar
-                            size={100}
+                            size={screens.xs ? 80 : 100}  // Responsive avatar size
                             icon={<AntDesignOutlined />}
                             src={urlAvatar}
                             shape="circle"
                             style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)', margin: '0 auto', display: 'block', cursor: 'pointer' }}
-                            onClick={handleAvatarClick} // Thêm sự kiện click để mở modal
+                            onClick={handleAvatarClick} // Sự kiện click mở modal
                         />
                     </Descriptions.Item>
                     <Descriptions.Item label="Id">{dataViewDetail?.id}</Descriptions.Item>

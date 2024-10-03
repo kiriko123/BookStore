@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Input, Row, Select, theme } from 'antd';
+
 const { Option } = Select;
 
 const InputSearch = (props) => {
@@ -9,7 +10,7 @@ const InputSearch = (props) => {
     const formStyle = {
         maxWidth: '100%',
         padding: '20px',
-        background: `#fff`,
+        background: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         color: '#222',
         fontWeight: 'bold',
@@ -36,9 +37,10 @@ const InputSearch = (props) => {
 
     return (
         <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish}>
-            <Row gutter={24}>
+            <Row gutter={[16, 16]}>
 
-                <Col span={4}>
+                {/* Responsive for Name */}
+                <Col xs={24} sm={12} md={8} lg={6}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`name`}
@@ -48,14 +50,14 @@ const InputSearch = (props) => {
                     </Form.Item>
                 </Col>
 
-
-                <Col span={4}>
+                {/* Responsive for Active */}
+                <Col xs={24} sm={12} md={8} lg={6}>
                     <Form.Item
                         labelCol={{ span: 24 }}
                         name={`active`}
                         label={`Active`}
                     >
-                        <Select placeholder="Select acive">
+                        <Select placeholder="Select active">
                             <Option value="true">Active</Option>
                             <Option value="false">Inactive</Option>
                         </Select>
@@ -63,6 +65,7 @@ const InputSearch = (props) => {
                 </Col>
 
             </Row>
+
             <Row>
                 <Col span={24} style={{ textAlign: 'right' }}>
                     <Button type="primary" htmlType="submit">
