@@ -10,12 +10,11 @@ import {
 } from '@ant-design/icons';
 import {callDeleteCategory, callFetchAllCategory, callGetAllOrder} from "../../../services/api.js";
 import { FaEye } from "react-icons/fa";
-// import InputSearch from "./InputSearch.jsx";
-// import CategoryViewDetail from "./CategoryViewDetail.jsx";
-// import CategoryModalCreate from "./CategoryModalCreate.jsx";
-// import CategoryModalUpdate from "./CategoryModalUpdate.jsx";
 import * as XLSX from "xlsx";
 import moment from 'moment';
+import InputSearch from "./InputSearch.jsx";
+import CategoryViewDetail from "../category/CategoryViewDetail.jsx";
+import OrderViewDetail from "./OrderViewDetail.jsx";
 
 const OrderTable = () => {
     const [current, setCurrent] = useState(1);
@@ -33,7 +32,7 @@ const OrderTable = () => {
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
 
-    const [listCategory, setlistCategory] = useState([]);
+    const [listOrder, setlistOrder] = useState([]);
 
     useEffect(() => {
         fetchCategories();
@@ -47,7 +46,7 @@ const OrderTable = () => {
         const res = await callGetAllOrder(query);
         console.log(res);
         if (res && res.data) {
-            setlistCategory(res.data.result);
+            setlistOrder(res.data.result);
             setTotal(res.data.meta.total);
         }
         setIsLoading(false);
@@ -179,11 +178,11 @@ const OrderTable = () => {
 
 
     const handleExportData = () => {
-        if (listCategory.length > 0) {
-            const worksheet = XLSX.utils.json_to_sheet(listCategory);
+        if (listOrder.length > 0) {
+            const worksheet = XLSX.utils.json_to_sheet(listOrder);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-            XLSX.writeFile(workbook, "ExportCategory.csv");
+            XLSX.writeFile(workbook, "ExportOrder.csv");
         }
     }
 
@@ -221,16 +220,16 @@ const OrderTable = () => {
         <>
             <Row gutter={[20, 20]}>
                 <Col span={24}>
-                    {/*<InputSearch handleSearch={handleSearch}*/}
-                    {/*             setFilter={setFilter}*/}
-                    {/*/>*/}
+                    <InputSearch handleSearch={handleSearch}
+                                 setFilter={setFilter}
+                    />
                 </Col>
                 <Col span={24}>
                     <Table
                         title={renderHeader}
                         loading={isLoading}
                         columns={columns}
-                        dataSource={listCategory}
+                        dataSource={listOrder}
                         onChange={onChange}
                         rowKey="id"
                         scroll={{ x: 800 }} // Enables horizontal scrolling
@@ -244,6 +243,12 @@ const OrderTable = () => {
                     />
                 </Col>
             </Row>
+            <OrderViewDetail
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+                setDataViewDetail={setDataViewDetail}
+            />
         </>
     );
 };

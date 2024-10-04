@@ -1,4 +1,4 @@
-package com.bookstore.be.dto.response;
+package com.bookstore.be.dto.response.statistics;
 
 import lombok.Getter;
 import lombok.Setter;

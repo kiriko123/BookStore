@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class StatisticsController {
     private final StatisticsService statisticsService;
 
-    @GetMapping("/count-all-user-order-and-book")
-    public ResponseEntity<?> countAllUserOrderAndBook() {
-        log.info("count-all-user-order-and-book");
+    @GetMapping("/count-all-user-order-and-total-price")
+    public ResponseEntity<?> countAllUserOrderAndTotalPrice() {
+        log.info("count-all-user-order-and-total-price");
         return ResponseEntity.ok(statisticsService.countAllUserAndOrder());
     }
 
@@ -28,4 +28,16 @@ public class StatisticsController {
         log.info("revenueStatistics");
         return ResponseEntity.ok(statisticsService.revenueStatistics());
     }
+
+    @GetMapping("/revenue-statistics-by-date")
+    public ResponseEntity<?> revenueStatisticsByDate() {
+        log.info("revenue-statistics-by-date");
+        return ResponseEntity.ok(statisticsService.revenueStatisticsByDate());
+    }
+    @GetMapping("/count-book-sold")
+    public ResponseEntity<?> countBookSold() {
+        log.info("count-book-sold");
+        return ResponseEntity.ok(statisticsService.countBookSold());
+    }
+
 }

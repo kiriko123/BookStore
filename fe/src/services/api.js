@@ -99,9 +99,16 @@ export const callGetAllOrder = (query) => {
 export const callCheckOut = (data) => {
     return axios.post('/api/v1/payment/create-payment-intent', data);
 }
-export const callCountAllUserOrderAndBook = () => {
-    return axios.get('/api/v1/statistics/count-all-user-order-and-book');
+export const callCountAllUserOrderAndTotalPrice = () => {
+    return axios.get('/api/v1/statistics/count-all-user-order-and-total-price');
 }
 export const callRevenueStatistics = () => {
     return axios.get('/api/v1/statistics/revenueStatistics');
+}
+
+export const callRevenueStatisticsByDate = () => {
+    return axios.get('/api/v1/statistics/revenue-statistics-by-date');
+}
+export const callCountBookSold = () => {
+    return axios.get('/api/v1/statistics/count-book-sold');
 }

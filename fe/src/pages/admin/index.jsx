@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { Card, Col, Row, Statistic } from "antd";
 import { UserOutlined, ShoppingCartOutlined, BookOutlined } from "@ant-design/icons";
-import { callCountAllUserOrderAndBook } from "../../services/api.js";
+
 import RevenueStatistics from "../../components/Admin/dashboard/RevenueStatistics.jsx";
 import './AdminPage.css';
+import RevenueStatisticsByDate from "../../components/Admin/dashboard/RevenueStatisticsByDate.jsx";
+import {callCountAllUserOrderAndTotalPrice} from "../../services/api.js";
+import CountBookSold from "../../components/Admin/dashboard/CountBookSold.jsx";
 
 const AdminPage = () => {
     const [dataDashboard, setDataDashboard] = useState({
@@ -18,7 +21,7 @@ const AdminPage = () => {
     }, []);
 
     const initDashboard = async () => {
-        const res = await callCountAllUserOrderAndBook();
+        const res = await callCountAllUserOrderAndTotalPrice();
         if (res && res.data) {
             setDataDashboard(res.data);
         }
@@ -71,14 +74,14 @@ const AdminPage = () => {
                         title={
                             <span style={{ fontWeight: "bold", fontSize: "18px" }}>
                                 <BookOutlined style={{ marginRight: "8px" }} />
-                                Tổng Sách
+                                Tổng doanh thu (VND)
                             </span>
                         }
                         bordered={false}
                         style={{ backgroundColor: "#f0f2f5" }}
                     >
                         <Statistic
-                            value={dataDashboard.totalBook}
+                            value={dataDashboard.totalPrice}
                             formatter={formatter}
                             valueStyle={{ fontSize: "24px", color: "#3f8600" }}
                         />
@@ -86,9 +89,18 @@ const AdminPage = () => {
                 </Col>
             </Row>
 
-            <Row gutter={[16, 16]} justify="center">
-                <Col xs={24} sm={24} md={24}>
+            <Row gutter={[16, 16]}>
+                <Col xs={24} sm={24} md={12}>
+                    <h3 style={{ textAlign: "center", margin: "20px 0" }}>Biểu đồ Doanh Thu Theo Năm</h3>
                     <RevenueStatistics />
+                </Col>
+                <Col xs={24} sm={24} md={12}>
+                    <h3 style={{ textAlign: "center", margin: "20px 0" }}>Biểu đồ Doanh Thu Theo Ngày</h3>
+                    <RevenueStatisticsByDate />
+                </Col>
+                <Col xs={24} sm={24} md={24}>
+                    <h3 style={{ textAlign: "center", margin: "20px 0" }}>Biểu đồ số lượng bán được theo sách</h3>
+                    <CountBookSold />
                 </Col>
             </Row>
         </>

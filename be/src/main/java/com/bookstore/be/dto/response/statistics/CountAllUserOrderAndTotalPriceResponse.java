@@ -9,8 +9,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CountAllUserOrderAndBookResponse {
+public class CountAllUserOrderAndTotalPriceResponse {
     long totalUser;
     long totalOrder;
-    long totalBook;
+    Double totalPrice;
 }
