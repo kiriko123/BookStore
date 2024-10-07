@@ -14,6 +14,10 @@
     align-items: center;
     justify-content: space-between;
     height: 50px;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Đảm bảo header nằm trên các phần khác */
+
 
     .trigger {
       /* Sidebar Toggle Icon */

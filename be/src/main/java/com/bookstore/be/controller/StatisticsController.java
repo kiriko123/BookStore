@@ -39,5 +39,19 @@ public class StatisticsController {
         log.info("count-book-sold");
         return ResponseEntity.ok(statisticsService.countBookSold());
     }
-
+    @GetMapping("/find-revenue-statistics-by-month-and-year")
+    public ResponseEntity<?> findRevenueStatisticsByMonthAndYear() {
+        log.info("find-revenue-statistics-by-month-and-year");
+        return ResponseEntity.ok(statisticsService.findRevenueStatisticsByMonthAndYear());
+    }
+    @GetMapping("/category-book-count")
+    public ResponseEntity<?> categoryBookCount() {
+        log.info("category-book-count");
+        return ResponseEntity.ok(statisticsService.categoryBookCount());
+    }
+    @GetMapping("/count-user-order")
+    public ResponseEntity<?> countUserOrder() {
+        log.info("count-user-order");
+        return ResponseEntity.ok(statisticsService.countUserOrder());
+    }
 }

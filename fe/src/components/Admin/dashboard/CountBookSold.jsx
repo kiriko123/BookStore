@@ -27,6 +27,14 @@ const CountBookSold = () => {
         style: {
             fill: 'rgba(126, 212, 236, 0.8)',
         },
+        slider: {
+            x: {
+                values: [0, 1],
+            },
+            y: {
+                values: [0, 1],
+            }
+        },
     };
 
     return <Column {...config} />;

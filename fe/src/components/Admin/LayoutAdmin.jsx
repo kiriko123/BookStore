@@ -51,7 +51,7 @@ const items = [
 ];
 
 const LayoutAdmin = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const user = useSelector(state => state.account.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -125,7 +125,13 @@ const LayoutAdmin = () => {
                 collapsible
                 collapsed={collapsed}
                 onCollapse={(value) => setCollapsed(value)}
-                style={{backgroundColor: '#1f1f1f'}} // Sidebar màu xám tối
+                style={{
+                    backgroundColor: '#0f3460', // Sidebar màu xám tối
+                    position: 'sticky', // Giữ menu cố định khi cuộn
+                    top: 0, // Giữ menu từ phía trên của viewport
+                    zIndex: 1000, // Đảm bảo nó nằm trên các thành phần khác khi cuộn
+                    height: '100vh' // Đặt chiều cao bằng chiều cao viewport
+                }}
             >
                 <div style={{height: 32, margin: 16, textAlign: 'center', color: '#fff', fontSize: 16}}>
                     Admin
@@ -135,11 +141,12 @@ const LayoutAdmin = () => {
                     mode="inline"
                     selectedKeys={[getKeyFromPathname()]} // Chọn đúng menu item dựa vào đường dẫn hiện tại
                     items={items}
-                    style={{backgroundColor: '#1f1f1f'}} // Màu nền sidebar menu đồng nhất
+                    style={{backgroundColor: '#0f3460'}} // Màu nền sidebar menu đồng nhất
                 />
             </Sider>
+
             <Layout>
-                <div className='admin-header' style={{backgroundColor: '#1f1f1f', color: '#fff', padding: '0 16px'}}>
+                <div className='admin-header' style={{backgroundColor: '#0f3460', color: '#fff', padding: '0 16px'}}>
                     <span>
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',

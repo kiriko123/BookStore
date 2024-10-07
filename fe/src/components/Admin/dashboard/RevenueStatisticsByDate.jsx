@@ -31,6 +31,11 @@ const RevenueStatisticsByDate = () => {
                 strokeWidth: 2,
             },
         },
+        slider: {
+            x: {
+                values: [0, 1],
+            }
+        },
     };
 
     return <Area {...config} />;

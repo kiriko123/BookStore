@@ -50,6 +50,8 @@ public class User {
     String createdBy;
     String updatedBy;
 
+    boolean googleAccount = false;
+
     @PrePersist
     public void handleBeforeCreate() {
         this.createdBy = SecurityUtil.getCurrentUserLogin().isPresent() ? SecurityUtil.getCurrentUserLogin().get() : "";

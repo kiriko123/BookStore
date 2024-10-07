@@ -16,7 +16,8 @@ const initialState = {
             "id": "",
             "name": ""
         },
-        "id": ""
+        "id": "",
+        "googleAccount": "",
     },
     tempAvatar: ""
 };
@@ -62,7 +63,8 @@ export const accountSlice = createSlice({
                     "id": "",
                     "name": ""
                 },
-                "id": ""
+                "id": "",
+                "googleAccount": "",
             }
             state.tempAvatar = "";
         },

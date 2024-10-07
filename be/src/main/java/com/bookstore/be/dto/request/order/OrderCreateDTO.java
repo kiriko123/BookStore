@@ -1,5 +1,6 @@
 package com.bookstore.be.dto.request.order;
 
+import com.bookstore.be.util.annotation.PhoneNumber;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
 public class OrderCreateDTO {
     @NotBlank
     String receiverName;
+    @PhoneNumber
     @NotBlank
     String receiverPhone;
     @NotBlank

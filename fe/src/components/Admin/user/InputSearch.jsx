@@ -53,8 +53,8 @@ const InputSearch = (props) => {
     };
 
     return (
-        <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish}>
-            <Row gutter={24}>
+        <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish} >
+            <Row gutter={24} justify={"center"}>
                 <Col xs={12} sm={12} md={8} lg={4}>
                     <Form.Item
                         labelCol={{ span: 24 }}

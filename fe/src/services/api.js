@@ -112,3 +112,12 @@ export const callRevenueStatisticsByDate = () => {
 export const callCountBookSold = () => {
     return axios.get('/api/v1/statistics/count-book-sold');
 }
+export const callFindRevenueStatisticsByMonthAndYear = () => {
+    return axios.get('/api/v1/statistics/find-revenue-statistics-by-month-and-year');
+}
+export const callCategoryBookCount = () => {
+    return axios.get('/api/v1/statistics/category-book-count');
+}
+export const callCountUserOrder = () => {
+    return axios.get('/api/v1/statistics/count-user-order');
+}

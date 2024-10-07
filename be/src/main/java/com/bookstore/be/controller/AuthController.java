@@ -131,6 +131,7 @@ public class AuthController {
             userLogin.setAddress(currentUser.getAddress());
             userLogin.setPhoneNumber(currentUser.getPhoneNumber());
             userLogin.setGender(currentUser.getGender());
+            userLogin.setGoogleAccount(currentUser.isGoogleAccount());
         }
 
         return ResponseEntity.ok().body(userLogin);
@@ -169,6 +170,7 @@ public class AuthController {
                     .address(currentUser.getAddress())
                     .phoneNumber(currentUser.getPhoneNumber())
                     .gender(currentUser.getGender())
+                    .googleAccount(currentUser.isGoogleAccount())
                     .build());
         }
 
@@ -307,6 +309,7 @@ public class AuthController {
                     .address(existingUser.getAddress())
                     .phoneNumber(existingUser.getPhoneNumber())
                     .gender(existingUser.getGender())
+                    .googleAccount(existingUser.isGoogleAccount())
                     .build());
 
             // Tạo access token

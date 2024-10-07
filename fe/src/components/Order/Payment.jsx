@@ -8,6 +8,7 @@ import { AiOutlineRollback } from "react-icons/ai";
 import CheckoutModal from './CheckoutModal';
 import { callPlaceOrder } from "../../services/api.js";
 import PhantomCheckoutModal from "./PhantomCheckoutModal.jsx";
+import LocationSelect from "./LocationSelect.jsx";
 const { TextArea } = Input;
 
 const Payment = (props) => {
@@ -20,6 +21,7 @@ const Payment = (props) => {
     const [isPhantomModalVisible, setIsPhantomModalVisible] = useState(false);
     const user = useSelector(state => state.account.user);
     const [form] = Form.useForm();
+    const [fullAddress, setFullAddress] = useState('');
 
     useEffect(() => {
         if (carts && carts.length > 0) {
@@ -45,7 +47,7 @@ const Payment = (props) => {
 
         const data = {
             receiverName: form.getFieldValue('name'),
-            receiverAddress: form.getFieldValue('address'),
+            receiverAddress: fullAddress,
             receiverPhone: form.getFieldValue('phone'),
             totalPrice: totalPrice,
             userId: user.id,
@@ -83,6 +85,26 @@ const Payment = (props) => {
         const conversionRate = 0.000043; // Example rate, 1 VND = 0.000043 Phantom Coin
         return vnd * conversionRate;
     };
+
+    const handleAddressChange = (province, district, ward, street) => {
+        let address = "";
+        if (street) {
+            address += `${street}, `;
+        }
+        if (ward) {
+            address += `${ward}, `;
+        }
+        if (district) {
+            address += `${district}, `;
+        }
+        if (province) {
+            address += `${province}`;
+        }
+        // Xóa dấu phẩy cuối cùng nếu có
+        address = address.trim().replace(/,\s*$/, '');
+        setFullAddress(address);
+    };
+
 
     return (
         <Row gutter={[20, 20]}>
@@ -137,14 +159,13 @@ const Payment = (props) => {
                             rules={[{ required: true, message: 'Số điện thoại không được để trống!' }]}>
                             <Input />
                         </Form.Item>
+                        {/* LocationSelect component for selecting address */}
                         <Form.Item
                             style={{ margin: 0 }}
                             labelCol={{ span: 24 }}
                             label="Địa chỉ"
-                            name="address"
-                            initialValue={user?.address}
-                            rules={[{ required: true, message: 'Địa chỉ không được để trống!' }]}>
-                            <TextArea rows={4} />
+                            rules={[{ required: true, message: 'Vui lòng chọn địa chỉ!' }]}>
+                            <LocationSelect onAddressChange={handleAddressChange} />
                         </Form.Item>
 
                         <div className='method'>

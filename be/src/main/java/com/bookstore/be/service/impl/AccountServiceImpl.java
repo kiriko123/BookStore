@@ -73,6 +73,7 @@ public class AccountServiceImpl implements AccountService {
                 .gender(GenderEnum.OTHER)
                 .imageUrl("user.png")
                 .enabled(true)
+                .googleAccount(true)
                 .build();
 
         return UserResponse.fromUserToUserResponse(userRepository.save(user));

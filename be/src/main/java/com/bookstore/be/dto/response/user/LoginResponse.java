@@ -33,6 +33,7 @@ public class LoginResponse implements Serializable {
         private String address;
         private GenderEnum gender;
         private Role role;
+        private boolean googleAccount = false;
     }
     @Getter
     @Setter
