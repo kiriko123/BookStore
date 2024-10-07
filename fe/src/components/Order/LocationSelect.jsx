@@ -61,7 +61,7 @@ const LocationSelect = ({ onAddressChange }) => {
         onAddressChange(
             provinces.find((p) => p.code === selectedProvince)?.name,
             districts.find((d) => d.code === selectedDistrict)?.name,
-            wards.find((w) => w.code === selectedWard)?.name,
+            wards.find((w) => w.code === value)?.name,
             street
         );
     };

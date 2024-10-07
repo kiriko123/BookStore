@@ -36,7 +36,7 @@ const ChangePassword = (props) => {
     };
 
     return (
-        <div style={{ minHeight: 350, display: "flex", justifyContent: "center", boxShadow: '0 4px 8px rgba(0,0,0,0.1)', padding: "0px" }}>
+        <div style={{ minHeight: 350, padding: "10px" }}>
             <Row justify="center">
                 <Col span={24}> {/* Tăng chiều rộng lên 12 cột, bạn có thể tăng thêm nếu muốn */}
                     <Form
@@ -47,32 +47,34 @@ const ChangePassword = (props) => {
                         form={form}
                         style={{
                             backgroundColor: "#fff",
-                            padding: "20px 0px 0px 0px",
+                            padding: "10px 0px 0px 0px",
                             borderRadius: "8px",
-                            width: "40vw" // Đặt chiều rộng cố định lớn hơn
+                            // width: "40vw" // Đặt chiều rộng cố định lớn hơn
                         }}
                     >
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            labelCol={{ span: 24 }}
-                            initialValue={user?.email}
-                            rules={[{ required: true, message: "Email không được để trống!" }]}
-                        >
-                            <Input disabled style={{ borderRadius: "8px" }} />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Mật khẩu hiện tại"
-                            name="password"
-                            labelCol={{ span: 24 }}
-                            rules={[{ required: true, message: "Mật khẩu không được để trống!" }]}
-                        >
-                            <Input.Password style={{ borderRadius: "8px" }} />
-                        </Form.Item>
-
                         <Row gutter={16}>
-                            <Col span={12}>
+                            <Col xs={24} sm={24}>
+                                <Form.Item
+                                    label="Email"
+                                    name="email"
+                                    labelCol={{ span: 24 }}
+                                    initialValue={user?.email}
+                                    rules={[{ required: true, message: "Email không được để trống!" }]}
+                                >
+                                    <Input disabled style={{ borderRadius: "8px" }} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24}>
+                                <Form.Item
+                                    label="Mật khẩu hiện tại"
+                                    name="password"
+                                    labelCol={{ span: 24 }}
+                                    rules={[{ required: true, message: "Mật khẩu không được để trống!" }]}
+                                >
+                                    <Input.Password style={{ borderRadius: "8px" }} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24}>
                                 <Form.Item
                                     label="Mật khẩu mới"
                                     name="newPassword"
@@ -85,7 +87,7 @@ const ChangePassword = (props) => {
                                     <Input.Password style={{ borderRadius: "8px" }} />
                                 </Form.Item>
                             </Col>
-                            <Col span={12}>
+                            <Col xs={24} sm={24}>
                                 <Form.Item
                                     label="Nhập lại mật khẩu mới"
                                     name="confirmPassword"

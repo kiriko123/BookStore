@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Button, Col, Divider, Form, Input, InputNumber, message, Modal, notification, Row, Radio} from 'antd';
-import {callUpdateCategory, callUpdateUser} from '../../../services/api';
+import {callUpdateCategory} from '../../../services/api';
 
 const UserModalUpdate = (props) => {
     const { openModalUpdate, setOpenModalUpdate, dataUpdate, setDataUpdate } = props;

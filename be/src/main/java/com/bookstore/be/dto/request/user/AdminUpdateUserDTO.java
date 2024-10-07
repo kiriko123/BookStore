@@ -34,4 +34,6 @@ public class AdminUpdateUserDTO {
     private String address;
 
     private String phoneNumber;
+
+    private boolean enabled;
 }

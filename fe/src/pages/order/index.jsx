@@ -10,7 +10,7 @@ const OrderPage = (props) => {
     const [currentStep, setCurrentStep] = useState(0);
     const navigate = useNavigate();
     return (
-        <div style={{background: '#efefef', padding: "20px 0"}}>
+        <div style={{background: '#dde8f8', padding: "20px 0"}}>
             <div className="order-container" style={{maxWidth: 1440, margin: '0 auto'}}>
                 <div className="order-steps">
                     <Steps

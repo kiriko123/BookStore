@@ -3,9 +3,11 @@ import {Row, Col, Form, Checkbox, Divider, InputNumber, Button, Rate, Tabs, Pagi
 import {useEffect, useState} from 'react';
 import {callFetchCategory, callFetchBooks} from '../../services/api';
 import './home.scss';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useOutletContext} from "react-router-dom";
 
 const Home = () => {
+
+    const [searchTerm, setSearchTerm] = useOutletContext();
 
     const [listCategory, setListCategory] = useState([]);
 
@@ -41,13 +43,16 @@ const Home = () => {
 
     useEffect(() => {
         fetchBook();
-    }, [current, pageSize, filter, sortQuery]);
+    }, [current, pageSize, filter, sortQuery, searchTerm]);
 
     const fetchBook = async () => {
         setIsLoading(true)
         let query = `page=${current}&size=${pageSize}`;
         if (filter) {
             query += `&${filter}`;
+        }
+        if (searchTerm){
+            query += ` and name~'${searchTerm}' `;
         }
         if (sortQuery) {
             query += `&${sortQuery}`;
@@ -174,7 +179,7 @@ const Home = () => {
     }
 
     return (
-        <div style={{background: '#efefef', padding: "20px 0"}}>
+        <div style={{background: '#dde8f8', padding: "20px 0"}}>
             <div className="homepage-container" style={{maxWidth: 1440, margin: '0 auto'}}>
                 <Row gutter={[20, 20]}>
                     <Col md={4} sm={0} xs={0}>

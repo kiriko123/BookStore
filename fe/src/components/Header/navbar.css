@@ -87,20 +87,31 @@ nav
     align-items: center;
 }
 .nav .logo {
-    font-size: 22px;
-
-    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav .logo .fas {
     color: #1890ff;
     margin-right: 5px;
     font-size: 28px;
+    cursor: pointer;
 }
 
-.nav .logo a {
-    color: #333;
-    text-decoration: none;
+.logo a {
+    font-family: 'Poppins', sans-serif; /* Chọn font chữ đẹp */
+    font-size: 1.3rem; /* Tăng kích thước chữ */
+    font-weight: bold; /* Làm chữ đậm */
+
+    text-decoration: none; /* Bỏ gạch chân */
+    letter-spacing: 1.5px; /* Giãn khoảng cách giữa các chữ cái */
+    text-transform: uppercase; /* Viết hoa tất cả chữ */
+    transition: color 0.3s ease; /* Thêm hiệu ứng chuyển màu mượt khi hover */
+}
+
+.logo a:hover {
+    color: #ff3300; /* Màu khi hover */
 }
 .search-bar {
     flex: 1;

@@ -11,7 +11,7 @@ const InputSearch = (props) => {
         maxWidth: '100%',
         padding: '20px',
         background: '#fff',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 4px 12px #0f3460',
         color: '#222',
         fontWeight: 'bold',
         marginBottom: '24px',

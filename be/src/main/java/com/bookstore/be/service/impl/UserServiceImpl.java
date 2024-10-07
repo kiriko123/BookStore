@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
         user.setGender(adminUpdateUserDTO.getGender());
         user.setAge(adminUpdateUserDTO.getAge());
         user.setPhoneNumber(adminUpdateUserDTO.getPhoneNumber());
+        user.setEnabled(adminUpdateUserDTO.isEnabled());
         return UserResponse.fromUserToUserResponse(userRepository.save(user));
     }
 

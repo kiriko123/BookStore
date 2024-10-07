@@ -53,7 +53,7 @@ const ViewDetail = (props) => {
     }
 
     return (
-        <div style={{ background: '#efefef', padding: "20px 0" }}>
+        <div style={{ background: '#dde8f8', padding: "20px 0" }}>
             <div className='view-detail-book' style={{ maxWidth: 1440, margin: '0 auto', minHeight: "calc(100vh - 150px)" }}>
                 <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
                     {dataBook && dataBook.id ?

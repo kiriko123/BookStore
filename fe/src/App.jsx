@@ -13,7 +13,6 @@ import ProtectedRoute from "./components/ProtectedRoute/index.jsx";
 import AdminPage from "./pages/admin/index.jsx";
 import ManageUserPage from "./pages/admin/user/index.jsx";
 import Auth from "./pages/auth/index.jsx";
-import Header from "./components/Header/header.jsx";
 import ForgotPage from "./pages/forgot/forgot.jsx";
 import ManageBookPage from "./pages/admin/book/index.jsx";
 import BookPage from "./pages/book/index.jsx";
@@ -21,13 +20,15 @@ import ManageCategoriesPage from "./pages/admin/category/index.jsx";
 import ManageOrderPage from "./pages/admin/order/index.jsx";
 import OrderPage from "./pages/order/index.jsx";
 import HistoryPage from "./pages/history/index.jsx";
+import Navbar from "./components/Header/navbar.jsx";
 
 
 const Layout = () => {
+    const [searchTerm, setSearchTerm] = useState("");
     return (
         <div className="layout-app">
-            <Header/>
-            <Outlet/>
+            <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+            <Outlet context={[searchTerm, setSearchTerm]}/>
             <Footer/>
         </div>
     )

@@ -57,6 +57,10 @@ const History = () => {
             dataIndex: 'receiverName',
         },
         {
+            title: 'Địa chỉ',
+            dataIndex: 'receiverAddress',
+        },
+        {
             title: 'Trạng thái',
             render: () => (
                 <Tag color={"green"}>
@@ -64,6 +68,7 @@ const History = () => {
                 </Tag>
             )
         },
+
         {
             title: 'Chi tiết',
             key: 'action',

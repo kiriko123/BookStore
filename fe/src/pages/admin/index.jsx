@@ -38,57 +38,60 @@ const AdminPage = () => {
                 <Col xs={24} sm={12} md={8}>
                     <Card
                         title={
-                            <span style={{fontWeight: "bold", fontSize: "18px"}}>
-                                <UserOutlined style={{marginRight: "8px"}}/>
+                            <span style={{fontWeight: "bold", fontSize: "18px", color: "#ffffff"}}>
+                                <UserOutlined style={{marginRight: "8px", color: "#ffffff"}}/>
                                 Tổng Users
                             </span>
                         }
                         bordered={false}
-                        style={{backgroundColor: "#f0f2f5"}}
+                        style={{backgroundImage: "linear-gradient(to right, #3a7bd5, #3a6073)"}}
                     >
                         <Statistic
                             value={dataDashboard.totalUser}
                             formatter={formatter}
-                            valueStyle={{fontSize: "24px", color: "#3f8600"}}
+                            valueStyle={{fontSize: "24px", color: "#ffffff"}}
                         />
                     </Card>
+
                 </Col>
                 <Col xs={24} sm={12} md={8}>
                     <Card
                         title={
-                            <span style={{fontWeight: "bold", fontSize: "18px"}}>
-                                <ShoppingCartOutlined style={{marginRight: "8px"}}/>
+                            <span style={{fontWeight: "bold", fontSize: "18px", color: "#ffffff"}}>
+                                <ShoppingCartOutlined style={{marginRight: "8px", color: "#ffffff"}}/>
                                 Tổng Đơn Hàng
                             </span>
                         }
                         bordered={false}
-                        style={{backgroundColor: "#f0f2f5"}}
+                        style={{backgroundImage: "linear-gradient(to right, #3a7bd5, #3a6073)"}}
                     >
                         <Statistic
                             value={dataDashboard.totalOrder}
                             precision={2}
                             formatter={formatter}
-                            valueStyle={{fontSize: "24px", color: "#cf1322"}}
+                            valueStyle={{fontSize: "24px", color: "#ffffff"}}
                         />
                     </Card>
+
                 </Col>
                 <Col xs={24} sm={12} md={8}>
                     <Card
                         title={
-                            <span style={{fontWeight: "bold", fontSize: "18px"}}>
-                                <BookOutlined style={{marginRight: "8px"}}/>
+                            <span style={{fontWeight: "bold", fontSize: "18px", color: "#ffffff"}}>
+                                <BookOutlined style={{marginRight: "8px", color: "#ffffff"}}/>
                                 Tổng doanh thu (VND)
                             </span>
                         }
                         bordered={false}
-                        style={{backgroundColor: "#f0f2f5"}}
+                        style={{backgroundImage: "linear-gradient(to right, #3a7bd5, #3a6073)"}}
                     >
                         <Statistic
                             value={dataDashboard.totalPrice}
                             formatter={formatter}
-                            valueStyle={{fontSize: "24px", color: "#3f8600"}}
+                            valueStyle={{fontSize: "24px", color: "#ffffff"}}
                         />
                     </Card>
+
                 </Col>
             </Row>
 
@@ -105,7 +108,7 @@ const AdminPage = () => {
                     <h3 style={{textAlign: "center", margin: "20px 0"}}>Biểu đồ Doanh Thu Theo Ngày</h3>
                     <RevenueStatisticsByDate/>
                 </Col>
-                <Col xs={24} sm={24} md={12} >
+                <Col xs={24} sm={24} md={12}>
                     <h3 style={{textAlign: "center", margin: "20px 0"}}>Biểu đồ số lượng sách mỗi loại doanh mục</h3>
                     <CategoryBookCount/>
                 </Col>

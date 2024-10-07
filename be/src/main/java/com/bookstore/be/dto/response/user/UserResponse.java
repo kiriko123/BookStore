@@ -40,6 +40,7 @@ public class UserResponse implements Serializable {
 
     private String createdBy;
     private String updatedBy;
+    private boolean googleAccount;
     private Role role;
 
     public static UserResponse fromUserToUserResponse(User user) {
@@ -55,6 +56,7 @@ public class UserResponse implements Serializable {
                 .phoneNumber(user.getPhoneNumber())
                 .enabled(user.isEnabled())
                 .imageUrl(user.getImageUrl())
+                .googleAccount(user.isGoogleAccount())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .createdBy(user.getCreatedBy())
